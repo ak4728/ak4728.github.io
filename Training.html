@@ -302,15 +302,6 @@ input {
                 .
             </div>
 
-            <div class="three columns">
-              	    <div id="" ;="" class="">
-                        <!-- Train (blau) -->
-                        <div id="submitTrainingButton" style="text-align:center;display:none;"><button style="cursor: not-allowed; width:100%;">Cool down</button></div>
-                        <!-- Reset Cooldown (green) -->
-                        <div id="submitResetButton" style="text-align: center; display: block;"><span class="tooltip_reset">Training Simulator</div>
-                   </div>
-            </div>
-
 		</div>
 	</div>
 
@@ -562,7 +553,7 @@ function loadTeam() {
 		var playerlist = goalies;
 		ResultsTable = ResultsTable.concat('<div style="margin: 20px 0 10px 0; color: rgba(17, 51, 83, 0.6);">Goalkeeper</div><table><thead><tr><th>Name</th><th>Age</th><th>Nationality</th><th><span class="tooltip">OS<span class="tooltiptext">Overall Strength</span></span></th><th><span class="tooltip">GK<span class="tooltiptext">Goalkeeping</span></span></th><th><span class="tooltip">DEF<span class="tooltiptext">Defending</span></span></th><th><span class="tooltip">PAS<span class="tooltiptext">Passing</span></span></th><th><span class="tooltip">DRI<span class="tooltiptext">Dribbling</span></span></th><th><span class="tooltip">SHT<span class="tooltiptext">Shot</span></span></th><th><span class="tooltip">HB<span class="tooltiptext">Headball</span></span></th><th><span class="tooltip">SPD<span class="tooltiptext">Speed</span></span></th><th><span class="tooltip">END<span class="tooltiptext">Endurance</span></span></th><th><span class="tooltip">433<span class="tooltiptext">4-3-3</span></span></th><th><span class="tooltip">442<span class="tooltiptext">4-4-2</span></span></th><th><span class="tooltip">451<span class="tooltiptext">4-5-1</span></span></th><th><span class="tooltip">352<span class="tooltiptext">3-5-2</span></span></th><th><span class="tooltip">4231<span class="tooltiptext">4-2-3-1</span></span></th></tr></thead>');
 		for (var i = 0, size = playerlist.length; i < size ; i++) {
-			var img = ("img/icon_player_4B4B4D.png")
+			var img = ("./Training_files/icon_player_4B4B4D.png")
 
 
 				console.log("Success.")
@@ -670,7 +661,7 @@ function loadTeam() {
 		var playerlist = defense;
 		ResultsTable = ResultsTable.concat('<div style="margin: 20px 0 10px 0; color: rgba(17, 51, 83, 0.6);">Defender</div><table><thead><tr><th>Name</th><th>Age</th><th>Nationality</th><th><span class="tooltip">OS<span class="tooltiptext">Overall Strength</span></span></th><th><span class="tooltip">GK<span class="tooltiptext">Goalkeeping</span></span></th><th><span class="tooltip">DEF<span class="tooltiptext">Defending</span></span></th><th><span class="tooltip">PAS<span class="tooltiptext">Passing</span></span></th><th><span class="tooltip">DRI<span class="tooltiptext">Dribbling</span></span></th><th><span class="tooltip">SHT<span class="tooltiptext">Shot</span></span></th><th><span class="tooltip">HB<span class="tooltiptext">Headball</span></span></th><th><span class="tooltip">SPD<span class="tooltiptext">Speed</span></span></th><th><span class="tooltip">END<span class="tooltiptext">Endurance</span></span></th><th><span class="tooltip">433<span class="tooltiptext">4-3-3</span></span></th><th><span class="tooltip">442<span class="tooltiptext">4-4-2</span></span></th><th><span class="tooltip">451<span class="tooltiptext">4-5-1</span></span></th><th><span class="tooltip">352<span class="tooltiptext">3-5-2</span></span></th><th><span class="tooltip">4231<span class="tooltiptext">4-2-3-1</span></span></th></tr></thead>');
 		for (var i = 0, size = playerlist.length; i < size ; i++) {
-			var img = ("img/icon_player_4B4B4D.png")
+			var img = ("./Training_files/icon_player_4B4B4D.png")
 
 			if ( training_type == "") {
 				console.log("Training type is not selected.")
