@@ -405,18 +405,11 @@ function updateTraining(){
 
 
 	if (userData.training_possible != 1){
-		document.getElementById("submitTrainingButton").style.display = 'none'
-		document.getElementById("submitTrainingButton").disabled = true;
-		document.getElementById("submitTrainingButton").innerHTML = '<button style="cursor: not-allowed; width:100%;">Cool down</button>';
-		document.getElementById("submitResetButton").style.display = 'block'
-		
+			console.log("Training is possible.")		
 				
 	}
 	else{
-		document.getElementById("submitTrainingButton").style.display = 'block'
-		document.getElementById("submitResetButton").style.display = 'none'
-		document.getElementById("submitTrainingButtonDeactivated").style.display = 'none'
-	}
+			console.log("Training is not possible.")			}
 	loadTeam()
 }
 	
