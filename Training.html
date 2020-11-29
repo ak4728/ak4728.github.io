@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<!-- saved from url=(0030)https://rabona.io/training.php -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<script src="chrome-extension://lkcjlnjfpbikmcmbachjpdbijejflpcm/js/steem_keychain.js"></script><script src="chrome-extension://jcacnejopjdphbnjgfaaobbfafkihpep/js/hive_keychain.js"></script>
+	<title>Training</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="./Training_files/css" rel="stylesheet" type="text/css">
+	<link rel="icon" type="image/png" href="https://rabona.io/img/favicon.png">
+	<link rel="stylesheet" href="./Training_files/normalize.css">
+	<link rel="stylesheet" href="./Training_files/skeleton.css">
+	<link rel="stylesheet" href="./Training_files/custom.css">
+	<script src="./Training_files/jquery.min.js.download"></script>
+	<script src="./Training_files/userCheck.js.download"></script>
+	<script src="./Training_files/config.js.download"></script>
+	<script src="./Training_files/commands.js.download"></script>
+	<script>var breadcrumbCurrent = " › Training"</script>
+
+<style>
+/* Table  Hover */
+    thead {}
+    tbody tr:hover {background-color:#fafafa;}
+
+/* Label */
+
+.slidecontainer {
+  width: 100%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 25px; /* Specified height */
+  background: #d3d3d3; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #4CAF50; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #4CAF50; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+label {
+    display: block;
+    margin-bottom: 0px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* Input */
+input {
+    display: block;
+    margin-bottom: 0px;
+    cursor: pointer;
+}
+
+/* Radio Train */
+.radio_train {
+    padding-right: 0px;
+    padding-bottom: 2px;
+}
+
+/* Tooltip */
+.tooltip_reset {
+  position: relative;
+  display: inline-block;
+  color: #006ab2;
+  border-bottom: 1px dotted rgb(22, 82, 240);
+  line-height: 1.2;
+  margin-bottom: 7px;
+  font-size: 90%;
+  cursor: help;
+  text-align: left;
+}
+
+.tooltip_reset .tooltiptext_reset {
+  visibility: hidden;
+  width: 266px;
+  background-color: #555;
+  color: #fff;
+  line-height: 1.4;
+  border-radius: 6px;
+  padding: 7px 10px 9px 10px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -144px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip_reset .tooltiptext_reset::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip_reset:hover .tooltiptext_reset {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+
+</head>
+<body data-new-gr-c-s-check-loaded="14.984.0" data-gr-ext-installed="">
+
+	<!-- Primary Page Layout -->
+
+	    <script>
+
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+	const teamid = urlParams.get('teamid');
+	$.getJSON({
+		type: "GET",
+		url: apiserver +'userinfo?id='+teamid,
+		async: false,
+		success: function(data){
+			teaminfo  = data;
+		}
+	});
+	const userName = teaminfo.user
+
+  
+    function formatNumber(num) {
+      num = parseInt(num)
+      num = num.toFixed(0)
+      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    };
+      function userInfo (){
+        var BallDollarBalance = 0;
+        var userData = {}
+        $.getJSON({
+          type: "GET",
+          url: apiserver +'userinfo?user='+userName,
+          async: false,	
+          success: function(data){
+            BallDollarBalance = data.currency;
+            userData = data
+          }
+        });
+        return (userData);	
+      };
+      var userData = userInfo()
+      BallDollarBalance = userData.currency;
+    </script>
+
+  <div class="container">
+    <div class="row" style="margin-top: 17px;">
+    </div>
+  </div>
+
+<!-- TRXModal -->
+<div id="modalTRX" class="modal">
+	<!-- Modal content -->
+	<div id="modalContentTRX" ,="" class="modal-content">
+		<span class="close" onclick="document.getElementById(&#39;modalTRX&#39;).style.display = &#39;none&#39;;">×</span>
+	</div>
+</div>
+<div id="transactionModalHIVE" class="modal">
+	<!-- Modal content -->
+	<div id="modal-trx-HIVE-content" ,="" class="modal-content">
+		<span class="close">×</span>
+		Starting the transfer<br>
+	</div>
+</div>
+	<!-- HTML Part -->
+
+
+<div id="transactionModalEverywhere" class="modal">
+	<!-- Modal content -->
+	<div id="transactionModalEverywhere-content" ,="" class="modal-content">
+		<span class="close" onclick="document.getElementById(&#39;transactionModalEverywhere&#39;).style.display = &#39;none&#39;;">×</span>
+		Starting the transaction<br>
+	</div>
+</div>
+
+<div id="buyRBN" class="modal">
+	<!-- Modal content -->
+	<div id="buyRBN-content" ,="" class="modal-content">
+		<span class="close" onclick="document.getElementById(&#39;buyRBN&#39;).style.display = &#39;none&#39;;">×</span>
+		<div style="font-size:120%; margin: 0 0 12px 0;"><b>Buy RBN</b></div>
+		RBN is an in-game token you can earn while playing and can be purchased here. Choose the amount of RBN you would like to buy and pay with HIVE.
+
+		<div style="border-bottom:1px solid #eee; margin: 32px 0 20px 0;"></div>
+		<div><b>100,000 RBN</b></div>
+                <div style="float:right!important; margin: -30px 0 0 0;"><button id="buy100000HIVE" class="button button-primary" style="width:120px">$0.99</button></div>
+
+                <div style="border-bottom:1px solid #eee; margin: 20px 0 20px 0;"></div>
+                <div><b>500,000 RBN</b></div>
+                <div style="float:right!important; margin: -30px 0 0 0;"><button id="buy500000HIVE" class="button button-primary" style="width:120px;">$4.99</button></div>
+
+                <div style="border-bottom:1px solid #eee; margin: 20px 0 20px 0;"></div>
+                <div><b>1,000,000 RBN</b></div>
+                <div style="float:right!important; margin: -30px 0 0 0;"><button id="buy1000000HIVE" class="button button-primary" style="width:120px;">$9.99</button></div>
+
+                <div style="border-bottom:1px solid #eee; margin: 20px 0 20px 0;"></div>
+                <div><b>2,200,000 RBN</b> <span style="color: rgba(17, 51, 83, 0.6); margin-left:20px;">10% Bonus-RBN</span></div>
+                <div style="float:right!important; margin: -30px 0 0 0;"><button id="buy2200000HIVE" class="button button-primary" style="width:120px;">$19.99</button></div>
+
+                <div style="border-bottom:1px solid #eee; margin: 20px 0 20px 0;"></div>
+                <div><b>6,000,000 RBN</b> <span style="color: rgba(17, 51, 83, 0.6); margin-left:20px;">20% Bonus-RBN</span></div>
+                <div style="float:right!important; margin: -30px 0 0 0;"><button id="buy6000000HIVE" class="button button-primary" style="width:120px;">$49.99</button></div>
+
+                <div style="border-bottom:1px solid #eee; margin: 20px 0 20px 0;"></div>
+                <div><b>15,000,000 RBN</b> <span style="color: rgba(17, 51, 83, 0.6); margin-left:20px;">50% Bonus-RBN</span></div>
+                <div style="float:right!important; margin: -30px 0 0 0;"><button id="buy15000000HIVE" class="button button-primary" style="width:120px;">$99.99</button></div>
+                <div style="border-bottom:1px solid #eee; margin: 20px 0 28px 0;"></div>
+                <div style="margin: 0 0 20px 0;"><i><b>Note:</b> We'll stop selling RBN on January 01, 2021. <a href="https://hive.blog/rabona/@rabona/roadmap-a-goal-without-a-plan-is-just-a-wish" target="_blank" class="keychainify-checked steem-keychain-checked">Read more »</a></i></div>
+	</div>
+</div>
+
+<!-- Javascript part -->
+<script>
+
+  var flagLinks={}
+  flagLinks['China']= "china.png"
+  flagLinks['Germany']= "germany.png"
+  flagLinks['Italy']= "italy.png"
+  flagLinks['France']= "france.png"
+  flagLinks['UK']= "united-kingdom.png"
+  flagLinks['Spain']= "spain.png"
+  flagLinks['Netherlands']= "netherlands.png"
+  flagLinks['Belgium']= "belgium.png"
+  flagLinks['Russia']= "russia.png"
+  flagLinks['Venezuela']= "venezuela.png"
+  flagLinks['Nigeria']= "nigeria.png"
+  flagLinks['Portugal']= "portugal.png"
+  flagLinks['Austria']= "austria.png"
+  flagLinks['Argentina']= "argentina.png"
+  flagLinks['Brazil']= "brazil.png"
+  flagLinks['Japan']= "japan.png"
+  flagLinks['Uruguay']= "uruguay.png"
+  flagLinks['Poland']= "poland.png"
+  flagLinks['Sweden']= "sweden.png"
+  flagLinks['Luxembourg']= "luxembourg.png"
+  flagLinks['Czechia']= "czech-republic.png"
+  flagLinks['Turkey']= "turkey.png"
+  flagLinks['South Korea']= "south-korea.png"
+	
+</script>
+
+
+  <div style="margin: 50px 0 40px 0;"></div>
+
+
+
+	<div class="slidecontainer">
+		<label for="myRange">Select Day(s) of Training Below</label>
+		<output for="fader" id="weeks">1</output>
+		<input type="range" min="1" max="30" value="1" step=1 class="slider" id="myRange" oninput="outputUpdate(value)">
+	</div>
+
+  <div style="margin: 0 0 40px 0;"></div>
+
+	<div class="container">
+ 		<div class="row">
+
+        <div class="eight columns">
+
+          <table>
+              <thead><tr><th></th><th></th><th></th></tr></thead>
+              <tbody><tr>
+                  <td class="radio_train"><input type="radio" id="Goa" name="training" value="goalkeeping" style="margin: 0 0 0 0;" onchange="updateTraining()"></td>
+                  <td><label for="Goa">Goalkeeping</label></td>
+                  <td style="text-align:left;"><div style="color: rgb(34,34,34,0.4); font-size: 90%;">Goalkeeper-specific training types with a goalkeeper coach.</div></td>
+              </tr>
+              <tr>
+                  <td class="radio_train"><input type="radio" id="Def" name="training" value="defending" style="margin: 0 0 0 0;" onchange="updateTraining()"></td>
+                  <td><label for="Def">Defending</label></td>
+                  <td style="text-align:left;"><div style="color: rgb(34,34,34,0.4); font-size: 90%;">Defensive player specific training types with a co-trainer.</div></td>
+              </tr>
+              <tr>
+                  <td class="radio_train"><input type="radio" id="Pas" name="training" value="passing" style="margin: 0 0 0 0;" onchange="updateTraining()"></td>
+                  <td><label for="Pas">Passing</label></td>
+                  <td style="text-align:left;"><div style="color: rgb(34,34,34,0.4); font-size: 90%;">Improves the precision of your team's passes.</div></td>
+              </tr>
+              <tr>
+                  <td class="radio_train"><input type="radio" id="Dri" name="training" value="dribbling" style="margin: 0 0 0 0;" onchange="updateTraining()"></td>
+                  <td><label for="Dri">Dribbling</label></td>
+                  <td style="text-align:left;"><div style="color: rgb(34,34,34,0.4); font-size: 90%;">Practice one-on-one situations.</div></td>
+              </tr>
+              <tr>
+                  <td class="radio_train"><input type="radio" id="Sho" name="training" value="shot" style="margin: 0 0 0 0;" onchange="updateTraining()"></td>
+                  <td><label for="Sho">Shot</label></td>
+                  <td style="text-align:left;"><div style="color: rgb(34,34,34,0.4); font-size: 90%;">Train the speed and precision of your player's shot technique.</div></td>
+              </tr>
+              <tr>
+                  <td class="radio_train"><input type="radio" id="Hea" name="training" value="headball" style="margin: 0 0 0 0;" onchange="updateTraining()"></td>
+                  <td><label for="Hea">Headball</label></td>
+                  <td style="text-align:left;"><div style="color: rgb(34,34,34,0.4); font-size: 90%;">Useful for high passes and corners.</div></td>
+              </tr>
+              <tr>
+                  <td class="radio_train"><input type="radio" id="Spe" name="training" value="speed" style="margin: 0 0 0 0;" onchange="updateTraining()"></td>
+                  <td><label for="Spe">Speed</label></td>
+                  <td style="text-align:left;"><div style="color: rgb(34,34,34,0.4); font-size: 90%;">Make each of your players a little faster.</div></td>
+              </tr>
+              <tr>
+                  <td class="radio_train"><input type="radio" id="End" name="training" value="endurance" style="margin: 0 0 0 0;" onchange="updateTraining()"></td>
+                  <td><label for="End">Endurance</label></td>
+                  <td style="text-align:left;"><div style="color: rgb(34,34,34,0.4); font-size: 90%;">Lets your athletes play stronger for longer.</div></td>
+              </tr>
+              <tr>
+                  <td class="radio_train"><input type="radio" id="F433" name="training" value="433" style="margin: 0 0 0 0;" onchange="updateTraining()"></td>
+                  <td><label for="F433">Formation 4-3-3</label></td>
+                  <td style="text-align:left;"><div style="color: rgb(34,34,34,0.4); font-size: 90%;">A great attacking formation with a strong back four.</div></td>
+              </tr>
+              <tr>
+                  <td class="radio_train"><input type="radio" id="F442" name="training" value="442" style="margin: 0 0 0 0;" onchange="updateTraining()"></td>
+                  <td><label for="F442">Formation 4-4-2</label></td>
+                  <td style="text-align:left;"><div style="color: rgb(34,34,34,0.4); font-size: 90%;">Flat four is one of the most popular formations.</div></td>
+              </tr>
+              <tr>
+                  <td class="radio_train"><input type="radio" id="F451" name="training" value="451" style="margin: 0 0 0 0;" onchange="updateTraining()"></td>
+                  <td><label for="F451">Formation 4-5-1</label></td>
+                  <td style="text-align:left;"><div style="color: rgb(34,34,34,0.4); font-size: 90%;">Counter-attack formation with a defensive mindset.</div></td>
+              </tr>
+              <tr>
+                  <td class="radio_train"><input type="radio" id="F352" name="training" value="352" style="margin: 0 0 0 0;" onchange="updateTraining()"></td>
+                  <td><label for="F352">Formation 3-5-2</label></td>
+                  <td style="text-align:left;"><div style="color: rgb(34,34,34,0.4); font-size: 90%;">Advantage of the 3-5-2 is a compact center.</div></td>
+              </tr>
+              <tr>
+                  <td class="radio_train"><input type="radio" id="F4231" name="training" value="4231" style="margin: 0 0 0 0;" onchange="updateTraining()"></td>
+                  <td><label for="F4231">Formation 4-2-3-1</label></td>
+                  <td style="text-align:left;"><div style="color: rgb(34,34,34,0.4); font-size: 90%;">In case of ball control a very fast switching is possible.</div></td>
+              </tr>
+          </tbody></table>
+
+	  	</div>
+
+
+            <div class="one columns">
+                .
+            </div>
+
+            <div class="three columns">
+              	    <div id="" ;="" class="">
+                        <!-- Train (blau) -->
+                        <div id="submitTrainingButton" style="text-align:center;display:none;"><button style="cursor: not-allowed; width:100%;">Cool down</button></div>
+                        <!-- Reset Cooldown (green) -->
+                        <div id="submitResetButton" style="text-align: center; display: block;"><span class="tooltip_reset">Training Simulator</div>
+                   </div>
+            </div>
+
+		</div>
+	</div>
+
+
+	<div class="container">
+ 		<div class="row">
+            <div class="twelve columns">
+                <div style="margin: 10px 0 30px 0;">Select a training type above and see the changes of the stats in realtime below:</div>
+            </div>
+		</div>
+	</div>
+
+	<div class="container">
+ 		<div class="row">
+            <div class="twelve columns">
+            	<div id="team" ;="" class="team">
+	            	<table id='gable'>
+		    			<thead>
+		    				<tr>
+		    					<th>Name</th>
+		    					<th>Age</th>
+		    					<th>Nationality</th>
+		    					<th><span class="tooltip">OS<span class="tooltiptext">Overall Strength</span></span></th>
+		    					<th><span class="tooltip">GK<span class="tooltiptext">Goalkeeping</span></span></th>
+		    					<th><span class="tooltip">DEF<span class="tooltiptext">Defending</span></span></th>
+		    					<th><span class="tooltip">PAS<span class="tooltiptext">Passing</span></span></th>
+		    					<th><span class="tooltip">DRI<span class="tooltiptext">Dribbling</span></span></th>
+		    					<th><span class="tooltip">SHT<span class="tooltiptext">Shot</span></span></th>
+		    					<th><span class="tooltip">HB<span class="tooltiptext">Headball</span></span></th>
+		    					<th><span class="tooltip">SPD<span class="tooltiptext">Speed</span></span></th>
+		    					<th><span class="tooltip">END<span class="tooltiptext">Endurance</span></span></th>
+		    					<th><span class="tooltip">433<span class="tooltiptext">4-3-3</span></span></th>
+		    					<th><span class="tooltip">442<span class="tooltiptext">4-4-2</span></span></th>
+		    					<th><span class="tooltip">451<span class="tooltiptext">4-5-1</span></span></th>
+		    					<th><span class="tooltip">352<span class="tooltiptext">3-5-2</span></span></th>
+		    					<th><span class="tooltip">4231<span class="tooltiptext">4-2-3-1</span></span></th>
+		    				</tr>
+		    			</thead>
+	            	</table>
+	            </div>
+
+				<script>
+					
+					$.getJSON({
+						type: "GET",
+						url: apiserver +'team?user='+userName,
+				        url: apiserver +'team?frozen=0&user='+userName,
+						async: false,
+						success: function(data){
+							players = data.players;
+						}
+					});
+					append_json(players);
+					function append_json(players){
+						var table = document.getElementById('gable');
+						
+
+						players.forEach(function(object) {
+						var tr = document.createElement('tr');
+						tr.innerHTML = '<tbody><tr>'+
+						'<td syle="min-width:170px;"><img src="./Training_files/icon_player_4B4B4D.png" width="17" height="17" style="margin: 0 6px -3px 0;"><a style="color: #4B4B4D;;" href="https://rabona.io/player.php?uid=P-ZAL9LW77B0W" class="keychainify-checked steem-keychain-checked">' + object.name + '</td>' +
+						'<td>' + object.age + '</td>' +
+						'<td style="min-width:110px;"><img src="./Training_files/russia.png" width="17" height="17" style="margin: 0 6px -3px 0;">'+object.country + '</td>' + 
+						'<td><span style="color:black">' + object.overall_strength + '</span></td>' +
+						'<td><span style="color:black">' + object.goalkeeping	 + '</span></td>' +
+						'<td><span style="color:black">' + object.defending + '</span></td>' +
+						'<td><span style="color:black">' + object.passing + '</span></td>' +
+						'<td><span style="color:black">' + object.dribbling	 + '</span></td>' +
+						'<td><span style="color:black">' + object.shot + '</span></td>' +
+						'<td><span style="color:black">' + object.headball + '</span></td>' +
+						'<td><span style="color:black">' + object.speed + '</span></td>' +
+						'<td><span style="color:black">' + object.endurance + '</span></td>' +
+						'<td><span style="color:black">' + object['433'] + '</span></td>' +
+						'<td><span style="color:black">' + object['442'] + '</span></td>' +
+						'<td><span style="color:black">' + object['451'] + '</span></td>' +
+						'<td><span style="color:black">' + object['352'] + '</span></td>' +
+						'<td><span style="color:black">' + object['4231'] + '</span></td>' 
+						table.appendChild(tr);
+						});
+					}
+				</script>
+
+                
+    
+  <!-- Footer -->
+
+
+<!-- End Document -->
+
+
+
+<script>
+updateTraining()
+	
+function outputUpdate(vol) {
+	document.querySelector('#weeks').value = vol;
+    updateTraining()
+}
+  
+function updateTraining(){
+
+
+	if (userData.training_possible != 1){
+		document.getElementById("submitTrainingButton").style.display = 'none'
+		document.getElementById("submitTrainingButton").disabled = true;
+		document.getElementById("submitTrainingButton").innerHTML = '<button style="cursor: not-allowed; width:100%;">Cool down</button>';
+		document.getElementById("submitResetButton").style.display = 'block'
+		
+				
+	}
+	else{
+		document.getElementById("submitTrainingButton").style.display = 'block'
+		document.getElementById("submitResetButton").style.display = 'none'
+		document.getElementById("submitTrainingButtonDeactivated").style.display = 'none'
+	}
+	loadTeam()
+}
+	
+function showTraining(){
+	document.getElementById('coach433').innerHTML = userData["433"].toFixed(0)
+	document.getElementById('coach442').innerHTML = userData["442"].toFixed(0)
+	document.getElementById('coach352').innerHTML = userData["352"].toFixed(0)
+	document.getElementById('coach451').innerHTML = userData["451"].toFixed(0)
+	document.getElementById('coach4231').innerHTML = userData["4231"].toFixed(0)
+	console.log(userData.training_possible)
+	if (userData.training_possible == 0){
+		console.log("training is impossible")
+		document.getElementById('submitTrainingButton').disabled = true;
+		document.getElementById('submitTrainingButton').innerHTML ="Too early to train again"
+	}
+	
+	document.getElementById('training').style.display = 'block'
+}
+function submitTraining(){
+	var radios = document.getElementsByName('training');
+	for (var i = 0, length = radios.length; i < length; i++) {
+		if (radios[i].checked) {
+			// do whatever you want with the checked radio
+			training_type = radios[i].value
+			console.log(radios[i].value);
+			// only one radio can be logically checked, don't check the rest
+			break;
+		}
+	}
+	
+	
+	
+	jsonMessage = ('{"username":"'+userName+'","type":"train","command":{"tr_var1":"'+training_type+'"}}')
+	submitTransaction(jsonMessage)
+}
+						   
+function loadTeam() {
+	var training_type = ""
+	var training_found = false
+	var radios = document.getElementsByName('training');
+	for (var i = 0, length = radios.length; i < length; i++) {
+		if (radios[i].checked) {
+			training_found = 1
+			// do whatever you want with the checked radio
+			training_type = radios[i].value
+			console.log(training_type);
+			// only one radio can be logically checked, don't check the rest
+			break;
+		}
+	}
+	//if (training_found == false) {return}
+
+	$.getJSON({
+		type: "GET",
+		url: apiserver +'team?user='+userName,
+        url: apiserver +'team?frozen=0&user='+userName,
+		async: false,
+		success: function(data){
+			players = data.players;
+		}
+	});
+
+
+	$.getJSON({
+		type: "GET",
+		url: apiserver +'team?user='+userName,
+        url: apiserver +'team?frozen=0&user='+userName,
+		async: false,
+		success: function(data){
+			players = data.players;
+		}
+	});
+	$.getJSON({
+		type: "GET",
+		url: apiserver +'trainingstats',
+		async: false,
+		success: function(data){
+			default_stats = {"352":0,"4231":0,"433":0,"442":0,"451":0,"defending":0,"dribbling":0,"endurance":0,"goalkeeping":0,"headball":0,"id":0,"passing":0,"shot":0,"speed":0,"type":"none"}
+			if (training_found == false) {training_stats = default_stats} else {training_stats = data[training_type]};
+		}
+	});
+
+		/// ------------------- Number of Days
+		var nDays = parseInt(document.querySelector('#weeks').value);
+
+		// Function to update new stats
+			function newStats(type){
+				var multiplier = 1 - training_stats[type]/100;
+				if(multiplier == 1){
+						var new_value = playerlist[i][type]
+						var chg_value = 0
+				}
+				else{
+					if(training_stats[type] < 0 ){
+						var addition = 0.3 * (1- 0.99**nDays)/ (1-0.99);
+						var new_value = (0.99**nDays)	 * playerlist[i][type] + addition;
+						var chg_value = new_value-playerlist[i][type]
+					}
+					else{
+						var addition = training_stats[type] * (1-multiplier**nDays)/ (1-multiplier);
+						var new_value = (multiplier**nDays) * playerlist[i][type] + addition;
+						var chg_value = new_value-playerlist[i][type]
+						}
+
+				}
+				return [new_value,chg_value]
+			};	
+
+
+	console.log(training_stats)
+	
+	var goalies = [];
+	var defense = [];
+	var midfield = [];
+	var offense = [];
+	for (var i = 0, size = players.length; i < size ; i++) {
+		type = players[i].type;
+		if (type == 1) {
+			goalies.push(players[i]);
+		}
+		else if (type == 2) {
+			defense.push(players[i]);
+		}
+		else if (type == 3) {
+			midfield.push(players[i]);
+		}
+		else {
+			offense.push(players[i]);
+		}
+	};
+		var ResultsTable = "";
+
+///----------------------------------- GK
+		var playerlist = goalies;
+		ResultsTable = ResultsTable.concat('<div style="margin: 20px 0 10px 0; color: rgba(17, 51, 83, 0.6);">Goalkeeper</div><table><thead><tr><th>Name</th><th>Age</th><th>Nationality</th><th><span class="tooltip">OS<span class="tooltiptext">Overall Strength</span></span></th><th><span class="tooltip">GK<span class="tooltiptext">Goalkeeping</span></span></th><th><span class="tooltip">DEF<span class="tooltiptext">Defending</span></span></th><th><span class="tooltip">PAS<span class="tooltiptext">Passing</span></span></th><th><span class="tooltip">DRI<span class="tooltiptext">Dribbling</span></span></th><th><span class="tooltip">SHT<span class="tooltiptext">Shot</span></span></th><th><span class="tooltip">HB<span class="tooltiptext">Headball</span></span></th><th><span class="tooltip">SPD<span class="tooltiptext">Speed</span></span></th><th><span class="tooltip">END<span class="tooltiptext">Endurance</span></span></th><th><span class="tooltip">433<span class="tooltiptext">4-3-3</span></span></th><th><span class="tooltip">442<span class="tooltiptext">4-4-2</span></span></th><th><span class="tooltip">451<span class="tooltiptext">4-5-1</span></span></th><th><span class="tooltip">352<span class="tooltiptext">3-5-2</span></span></th><th><span class="tooltip">4231<span class="tooltiptext">4-2-3-1</span></span></th></tr></thead>');
+		for (var i = 0, size = playerlist.length; i < size ; i++) {
+			var img = ("img/icon_player_4B4B4D.png")
+
+
+				console.log("Success.")
+				var new_goalkeeping		= newStats("goalkeeping")[0]
+				var chg_goalkeeping		= newStats("goalkeeping")[1]
+				var new_defending = newStats("defending")[0] 
+				var chg_defending = newStats("defending")[1]
+				var new_passing = newStats("passing") [0]
+				var chg_passing = newStats("passing")[1]
+				var new_dribbling = newStats("dribbling")[0] 
+				var chg_dribbling = newStats("dribbling")[1]
+				var new_shot = newStats("shot") [0]
+				var chg_shot = newStats("shot")[1]
+				var new_headball = newStats("headball") [0]
+				var chg_headball = newStats("headball")[1]
+				var new_speed = newStats("speed") [0]
+				var chg_speed = newStats("speed")[1]
+				var new_endurance = newStats("speed") [0]
+				var chg_endurance = newStats("speed")[1]
+				var new_433 = newStats("433") [0]
+				var chg_433 = newStats("433")[1]
+				var new_442 = newStats("442") [0]
+				var chg_442 = newStats("442")[1]
+				var new_352 = newStats("352") [0]
+				var chg_352 = newStats("352")[1]
+				var new_451 = newStats("451") [0]
+				var chg_451 = newStats("451")[1]
+				var new_4231 = newStats("4231") [0]
+				var chg_4231 = newStats("4231")[1]
+
+			/// 433			
+			if (chg_433 > 0){table_433 = '<span style="color: green">'+new_433.toFixed(1)+' / (+'+chg_433.toFixed(1)+')</span>'}
+			else if (chg_433 < 0){table_433 = '<span style="color:red">'+new_433.toFixed(1)+' / ('+chg_433.toFixed(1)+')</span>'}
+			else {table_433 = '<span style="color:black">'+new_433.toFixed(1)+'</span>'}
+			
+			/// 442
+			if (chg_442 > 0){table_442 = '<span style="color: green">'+new_442.toFixed(1)+' / (+'+chg_442.toFixed(1)+')</span>'}
+			else if (chg_442 < 0){table_442 = '<span style="color:red">'+new_442.toFixed(1)+' / ('+chg_442.toFixed(1)+')</span>'}
+			else {table_442 = '<span style="color:black">'+new_442.toFixed(1)+'</span>'}
+
+			// ---------------------------			
+			if (chg_352 > 0){table_352 = '<span style="color: green">'+new_352.toFixed(1)+' / (+'+chg_352.toFixed(1)+')</span>'}
+			else if (chg_352 < 0){table_352 = '<span style="color:red">'+new_352.toFixed(1)+' / ('+chg_352.toFixed(1)+')</span>'}
+			else {table_352 = '<span style="color:black">'+new_352.toFixed(1)+'</span>'}
+
+			// ---------------------------
+			if (chg_451 > 0){table_451 = '<span style="color: green">'+new_451.toFixed(1)+' / (+'+chg_451.toFixed(1)+')</span>'}
+			else if (chg_451 < 0){table_451 = '<span style="color:red">'+new_451.toFixed(1)+' / ('+chg_451.toFixed(1)+')</span>'}
+			else {table_451 = '<span style="color:black">'+new_451.toFixed(1)+'</span>'}
+			
+			//-----------------------------------------------
+			if (chg_4231 > 0){table_4231 = '<span style="color: green">'+new_4231.toFixed(1)+' / (+'+chg_4231.toFixed(1)+')</span>'}
+			else if (chg_4231 < 0){table_4231 = '<span style="color:red">'+new_4231.toFixed(1)+' / ('+chg_4231.toFixed(1)+')</span>'}
+			else {table_4231 = '<span style="color:black">'+new_4231.toFixed(1)+'</span>'}
+			
+			//-----------------------------------------------
+			if (chg_goalkeeping > 0){table_goalkeeping = '<span style="color: green">'+new_goalkeeping.toFixed(1)+' / (+'+chg_goalkeeping.toFixed(1)+')</span>'}
+			else if (chg_goalkeeping < 0){table_goalkeeping = '<span style="color:red">'+new_goalkeeping.toFixed(1)+' / ('+chg_goalkeeping.toFixed(1)+')</span>'}
+			else {table_goalkeeping = '<span style="color:black">'+new_goalkeeping.toFixed(1)+'</span>'}
+			//-----------------------------------------------
+			if (chg_defending > 0){table_defending = '<span style="color: green">'+new_defending.toFixed(1)+' / (+'+chg_defending.toFixed(1)+')</span>'}
+			else if (chg_defending < 0){table_defending = '<span style="color:red">'+new_defending.toFixed(1)+' / ('+chg_defending.toFixed(1)+')</span>'}
+			else {table_defending = '<span style="color:black">'+new_defending.toFixed(1)+'</span>'}
+			//-----------------------------------------------
+			if (chg_passing > 0){table_passing = '<span style="color: green">'+new_passing.toFixed(1)+' / (+'+chg_passing.toFixed(1)+')</span>'}
+			else if (chg_passing < 0){table_passing = '<span style="color:red">'+new_passing.toFixed(1)+' / ('+chg_passing.toFixed(1)+')</span>'}
+			else {table_passing = '<span style="color:black">'+new_passing.toFixed(1)+'</span>'}
+			//-----------------------------------------------
+			if (chg_dribbling > 0){table_dribbling = '<span style="color: green">'+new_dribbling.toFixed(1)+' / (+'+chg_dribbling.toFixed(1)+')</span>'}
+			else if (chg_dribbling < 0){table_dribbling = '<span style="color:red">'+new_dribbling.toFixed(1)+' / ('+chg_dribbling.toFixed(1)+')</span>'}
+			else {table_dribbling = '<span style="color:black">'+new_dribbling.toFixed(1)+'</span>'}
+			//-----------------------------------------------
+			if (chg_shot > 0){table_shot = '<span style="color: green">'+new_shot.toFixed(1)+' / (+'+chg_shot.toFixed(1)+')</span>'}
+			else if (chg_shot < 0){table_shot = '<span style="color:red">'+new_shot.toFixed(1)+' / ('+chg_shot.toFixed(1)+')</span>'}
+			else {table_shot = '<span style="color:black">'+new_shot.toFixed(1)+'</span>'}
+			//-----------------------------------------------
+			if (chg_headball > 0){table_headball = '<span style="color: green">'+new_headball.toFixed(1)+' / (+'+chg_headball.toFixed(1)+')</span>'}
+			else if (chg_headball < 0){table_headball = '<span style="color:red">'+new_headball.toFixed(1)+' / ('+chg_headball.toFixed(1)+')</span>'}
+			else {table_headball = '<span style="color:black">'+new_headball.toFixed(1)+'</span>'}
+			//-----------------------------------------------
+			if (chg_speed > 0){table_speed = '<span style="color: green">'+new_speed.toFixed(1)+' / (+'+chg_speed.toFixed(1)+')</span>'}
+			else if (chg_speed < 0){table_speed = '<span style="color:red">'+new_speed.toFixed(1)+' / ('+chg_speed.toFixed(1)+')</span>'}
+			else {table_speed = '<span style="color:black">'+new_speed.toFixed(1)+'</span>'}
+			//-----------------------------------------------
+			if (chg_endurance > 0){table_endurance = '<span style="color: green">'+new_endurance.toFixed(1)+' / (+'+chg_endurance.toFixed(1)+')</span>'}
+			else if (chg_endurance < 0){table_endurance = '<span style="color:red">'+new_endurance.toFixed(1)+' / ('+chg_endurance.toFixed(1)+')</span>'}
+			else {table_endurance = '<span style="color:black">'+new_endurance.toFixed(1)+'</span>'}
+
+			//-----------------------------------------------
+			var chg_os = (chg_endurance*0.2 + chg_speed*0.1 + chg_goalkeeping*0.6 + chg_passing*0.1)
+			var new_os = playerlist[i]["overall_strength"] + chg_os
+			
+			if (chg_os > 0){table_os = '<span style="color: green">'+new_os.toFixed(1)+' / (+'+chg_os.toFixed(1)+')</span>'}
+			else if (chg_os < 0){table_os = '<span style="color:red">'+new_os.toFixed(1)+' / ('+chg_os.toFixed(1)+')</span>'}
+			else {table_os = '<span style="color:black">'+new_os.toFixed(1)+'</span>'}			
+			//-----------------------------------------------			
+			
+			var playerClass = "color: #4B4B4D;"
+			ResultsTable = ResultsTable.concat('<tbody><tr><td style="min-width:170px;"><img src="'+img+'" width="17" height="17" style="margin: 0 6px -3px 0;" /><a  style="'+playerClass+';" href="player.php?uid='+playerlist[i].uid+'">'+playerlist[i].name+'</a></td><td>'+playerlist[i].age.toFixed(0)+'</td><td style="min-width:110px;"><img src="https://rabona.io/img/flag/'+flagLinks[playerlist[i].country]+'" width="17" height="17" style="margin: 0 6px -3px 0;" />'+playerlist[i].country+'</td><td>'+table_os+'</td><td>'+table_goalkeeping+'</td><td>'+table_defending+'</td><td>'+table_passing+'</td><td>'+table_dribbling+'</td><td>'+table_shot+'</td><td>'+table_headball+'</td><td>'+table_speed+'</td><td>'+table_endurance+'</td><td>'+table_433+'</td><td>'+table_442+'</td><td>'+table_451+'</td><td>'+table_352+'</td><td>'+table_4231+'</td>');
+		};
+	ResultsTable = ResultsTable.concat('</tbody></table>');
+
+
+///----------------------------------- DEF
+		var playerlist = defense;
+		ResultsTable = ResultsTable.concat('<div style="margin: 20px 0 10px 0; color: rgba(17, 51, 83, 0.6);">Defender</div><table><thead><tr><th>Name</th><th>Age</th><th>Nationality</th><th><span class="tooltip">OS<span class="tooltiptext">Overall Strength</span></span></th><th><span class="tooltip">GK<span class="tooltiptext">Goalkeeping</span></span></th><th><span class="tooltip">DEF<span class="tooltiptext">Defending</span></span></th><th><span class="tooltip">PAS<span class="tooltiptext">Passing</span></span></th><th><span class="tooltip">DRI<span class="tooltiptext">Dribbling</span></span></th><th><span class="tooltip">SHT<span class="tooltiptext">Shot</span></span></th><th><span class="tooltip">HB<span class="tooltiptext">Headball</span></span></th><th><span class="tooltip">SPD<span class="tooltiptext">Speed</span></span></th><th><span class="tooltip">END<span class="tooltiptext">Endurance</span></span></th><th><span class="tooltip">433<span class="tooltiptext">4-3-3</span></span></th><th><span class="tooltip">442<span class="tooltiptext">4-4-2</span></span></th><th><span class="tooltip">451<span class="tooltiptext">4-5-1</span></span></th><th><span class="tooltip">352<span class="tooltiptext">3-5-2</span></span></th><th><span class="tooltip">4231<span class="tooltiptext">4-2-3-1</span></span></th></tr></thead>');
+		for (var i = 0, size = playerlist.length; i < size ; i++) {
+			var img = ("img/icon_player_4B4B4D.png")
+
+			if ( training_type == "") {
+				console.log("Training type is not selected.")
+			}
+			else{
+				console.log("Success.")
+				var new_goalkeeping		= newStats("goalkeeping")[0]
+				var chg_goalkeeping		= newStats("goalkeeping")[1]
+				var new_defending = newStats("defending")[0] 
+				var chg_defending = newStats("defending")[1]
+				var new_passing = newStats("passing") [0]
+				var chg_passing = newStats("passing")[1]
+				var new_dribbling = newStats("dribbling")[0] 
+				var chg_dribbling = newStats("dribbling")[1]
+				var new_shot = newStats("shot") [0]
+				var chg_shot = newStats("shot")[1]
+				var new_headball = newStats("headball") [0]
+				var chg_headball = newStats("headball")[1]
+				var new_speed = newStats("speed") [0]
+				var chg_speed = newStats("speed")[1]
+				var new_endurance = newStats("speed") [0]
+				var chg_endurance = newStats("speed")[1]
+				var new_433 = newStats("433") [0]
+				var chg_433 = newStats("433")[1]
+				var new_442 = newStats("442") [0]
+				var chg_442 = newStats("442")[1]
+				var new_352 = newStats("352") [0]
+				var chg_352 = newStats("352")[1]
+				var new_451 = newStats("451") [0]
+				var chg_451 = newStats("451")[1]
+				var new_4231 = newStats("4231") [0]
+				var chg_4231 = newStats("4231")[1]
+			};
+
+///433			
+			if (chg_433 > 0){table_433 = '<span style="color: green">'+new_433.toFixed(1)+' / (+'+chg_433.toFixed(1)+')</span>'}
+			else if (chg_433 < 0){table_433 = '<span style="color:red">'+new_433.toFixed(1)+' / ('+chg_433.toFixed(1)+')</span>'}
+			else {table_433 = '<span style="color:black">'+new_433.toFixed(1)+'</span>'}
+			
+/// 442		
+			if (chg_442 > 0){table_442 = '<span style="color: green">'+new_442.toFixed(1)+' / (+'+chg_442.toFixed(1)+')</span>'}
+			else if (chg_442 < 0){table_442 = '<span style="color:red">'+new_442.toFixed(1)+' / ('+chg_442.toFixed(1)+')</span>'}
+			else {table_442 = '<span style="color:black">'+new_442.toFixed(1)+'</span>'}
+
+			// ---------------------------			
+			if (chg_352 > 0){table_352 = '<span style="color: green">'+new_352.toFixed(1)+' / (+'+chg_352.toFixed(1)+')</span>'}
+			else if (chg_352 < 0){table_352 = '<span style="color:red">'+new_352.toFixed(1)+' / ('+chg_352.toFixed(1)+')</span>'}
+			else {table_352 = '<span style="color:black">'+new_352.toFixed(1)+'</span>'}
+
+			// ---------------------------			
+			if (chg_451 > 0){table_451 = '<span style="color: green">'+new_451.toFixed(1)+' / (+'+chg_451.toFixed(1)+')</span>'}
+			else if (chg_451 < 0){table_451 = '<span style="color:red">'+new_451.toFixed(1)+' / ('+chg_451.toFixed(1)+')</span>'}
+			else {table_451 = '<span style="color:black">'+new_451.toFixed(1)+'</span>'}
+			
+			//-----------------------------------------------
+			if (chg_4231 > 0){table_4231 = '<span style="color: green">'+new_4231.toFixed(1)+' / (+'+chg_4231.toFixed(1)+')</span>'}
+			else if (chg_4231 < 0){table_4231 = '<span style="color:red">'+new_4231.toFixed(1)+' / ('+chg_4231.toFixed(1)+')</span>'}
+			else {table_4231 = '<span style="color:black">'+new_4231.toFixed(1)+'</span>'}
+			
+			//-----------------------------------------------
+			if (chg_goalkeeping > 0){table_goalkeeping = '<span style="color: green">'+new_goalkeeping.toFixed(1)+' / (+'+chg_goalkeeping.toFixed(1)+')</span>'}
+			else if (chg_goalkeeping < 0){table_goalkeeping = '<span style="color:red">'+new_goalkeeping.toFixed(1)+' / ('+chg_goalkeeping.toFixed(1)+')</span>'}
+			else {table_goalkeeping = '<span style="color:black">'+new_goalkeeping.toFixed(1)+'</span>'}
+			//-----------------------------------------------
+			if (chg_defending > 0){table_defending = '<span style="color: green">'+new_defending.toFixed(1)+' / (+'+chg_defending.toFixed(1)+')</span>'}
+			else if (chg_defending < 0){table_defending = '<span style="color:red">'+new_defending.toFixed(1)+' / ('+chg_defending.toFixed(1)+')</span>'}
+			else {table_defending = '<span style="color:black">'+new_defending.toFixed(1)+'</span>'}
+			//-----------------------------------------------
+			if (chg_passing > 0){table_passing = '<span style="color: green">'+new_passing.toFixed(1)+' / (+'+chg_passing.toFixed(1)+')</span>'}
+			else if (chg_passing < 0){table_passing = '<span style="color:red">'+new_passing.toFixed(1)+' / ('+chg_passing.toFixed(1)+')</span>'}
+			else {table_passing = '<span style="color:black">'+new_passing.toFixed(1)+'</span>'}
+			//-----------------------------------------------
+			if (chg_dribbling > 0){table_dribbling = '<span style="color: green">'+new_dribbling.toFixed(1)+' / (+'+chg_dribbling.toFixed(1)+')</span>'}
+			else if (chg_dribbling < 0){table_dribbling = '<span style="color:red">'+new_dribbling.toFixed(1)+' / ('+chg_dribbling.toFixed(1)+')</span>'}
+			else {table_dribbling = '<span style="color:black">'+new_dribbling.toFixed(1)+'</span>'}
+			//-----------------------------------------------
+			if (chg_shot > 0){table_shot = '<span style="color: green">'+new_shot.toFixed(1)+' / (+'+chg_shot.toFixed(1)+')</span>'}
+			else if (chg_shot < 0){table_shot = '<span style="color:red">'+new_shot.toFixed(1)+' / ('+chg_shot.toFixed(1)+')</span>'}
+			else {table_shot = '<span style="color:black">'+new_shot.toFixed(1)+'</span>'}
+			//-----------------------------------------------
+			if (chg_headball > 0){table_headball = '<span style="color: green">'+new_headball.toFixed(1)+' / (+'+chg_headball.toFixed(1)+')</span>'}
+			else if (chg_headball < 0){table_headball = '<span style="color:red">'+new_headball.toFixed(1)+' / ('+chg_headball.toFixed(1)+')</span>'}
+			else {table_headball = '<span style="color:black">'+new_headball.toFixed(1)+'</span>'}
+			//-----------------------------------------------
+			if (chg_speed > 0){table_speed = '<span style="color: green">'+new_speed.toFixed(1)+' / (+'+chg_speed.toFixed(1)+')</span>'}
+			else if (chg_speed < 0){table_speed = '<span style="color:red">'+new_speed.toFixed(1)+' / ('+chg_speed.toFixed(1)+')</span>'}
+			else {table_speed = '<span style="color:black">'+new_speed.toFixed(1)+'</span>'}
+			//-----------------------------------------------
+			if (chg_endurance > 0){table_endurance = '<span style="color: green">'+new_endurance.toFixed(1)+' / (+'+chg_endurance.toFixed(1)+')</span>'}
+			else if (chg_endurance < 0){table_endurance = '<span style="color:red">'+new_endurance.toFixed(1)+' / ('+chg_endurance.toFixed(1)+')</span>'}
+			else {table_endurance = '<span style="color:black">'+new_endurance.toFixed(1)+'</span>'}
+			
+			//-----------------------------------------------
+			var chg_os = (chg_endurance*0.2 + chg_speed*0.1 + chg_defending*0.4 + chg_passing*0.25 + chg_dribbling*0.05)
+			var new_os = playerlist[i]["overall_strength"] + chg_os
+			
+			if (chg_os > 0){table_os = '<span style="color: green">'+new_os.toFixed(1)+' / (+'+chg_os.toFixed(1)+')</span>'}
+			else if (chg_os < 0){table_os = '<span style="color:red">'+new_os.toFixed(1)+' / ('+chg_os.toFixed(1)+')</span>'}
+			else {table_os = '<span style="color:black">'+new_os.toFixed(1)+'</span>'}			
+			//-----------------------------------------------
+			
+			var playerClass = "color: #4B4B4D;"
+			ResultsTable = ResultsTable.concat('<tbody><tr><td style="min-width:170px;"><img src="'+img+'" width="17" height="17" style="margin: 0 6px -3px 0;" /><a  style="'+playerClass+'" href="player.php?uid='+playerlist[i].uid+'">'+playerlist[i].name+'</a></td><td>'+playerlist[i].age.toFixed(0)+'</td><td style="min-width:110px;"><img src="https://rabona.io/img/flag/'+flagLinks[playerlist[i].country]+'" width="17" height="17" style="margin: 0 6px -3px 0;" />'+playerlist[i].country+'</td><td>'+table_os+'</td><td>'+table_goalkeeping+'</td><td>'+table_defending+'</td><td>'+table_passing+'</td><td>'+table_dribbling+'</td><td>'+table_shot+'</td><td>'+table_headball+'</td><td>'+table_speed+'</td><td>'+table_endurance+'</td><td>'+table_433+'</td><td>'+table_442+'</td><td>'+table_451+'</td><td>'+table_352+'</td><td>'+table_4231+'</td>');
+		};
+	ResultsTable = ResultsTable.concat('</tbody></table>');
+	
+///----------------------------------- MID		
+		var playerlist = midfield;
+		ResultsTable = ResultsTable.concat('<div style="margin: 20px 0 10px 0; color: rgba(17, 51, 83, 0.6);">Midfielder</div><table><thead><tr><th>Name</th><th>Age</th><th>Nationality</th><th><span class="tooltip">OS<span class="tooltiptext">Overall Strength</span></span></th><th><span class="tooltip">GK<span class="tooltiptext">Goalkeeping</span></span></th><th><span class="tooltip">DEF<span class="tooltiptext">Defending</span></span></th><th><span class="tooltip">PAS<span class="tooltiptext">Passing</span></span></th><th><span class="tooltip">DRI<span class="tooltiptext">Dribbling</span></span></th><th><span class="tooltip">SHT<span class="tooltiptext">Shot</span></span></th><th><span class="tooltip">HB<span class="tooltiptext">Headball</span></span></th><th><span class="tooltip">SPD<span class="tooltiptext">Speed</span></span></th><th><span class="tooltip">END<span class="tooltiptext">Endurance</span></span></th><th><span class="tooltip">433<span class="tooltiptext">4-3-3</span></span></th><th><span class="tooltip">442<span class="tooltiptext">4-4-2</span></span></th><th><span class="tooltip">451<span class="tooltiptext">4-5-1</span></span></th><th><span class="tooltip">352<span class="tooltiptext">3-5-2</span></span></th><th><span class="tooltip">4231<span class="tooltiptext">4-2-3-1</span></span></th></tr></thead>');
+		for (var i = 0, size = playerlist.length; i < size ; i++) {
+			var img = ("img/icon_player_4B4B4D.png")
+
+			if ( training_type == "") {
+				console.log("Training type is not selected.")
+			}
+			else{
+				console.log("Success.")
+				var new_goalkeeping		= newStats("goalkeeping")[0]
+				var chg_goalkeeping		= newStats("goalkeeping")[1]
+				var new_defending = newStats("defending")[0] 
+				var chg_defending = newStats("defending")[1]
+				var new_passing = newStats("passing") [0]
+				var chg_passing = newStats("passing")[1]
+				var new_dribbling = newStats("dribbling")[0] 
+				var chg_dribbling = newStats("dribbling")[1]
+				var new_shot = newStats("shot") [0]
+				var chg_shot = newStats("shot")[1]
+				var new_headball = newStats("headball") [0]
+				var chg_headball = newStats("headball")[1]
+				var new_speed = newStats("speed") [0]
+				var chg_speed = newStats("speed")[1]
+				var new_endurance = newStats("speed") [0]
+				var chg_endurance = newStats("speed")[1]
+				var new_433 = newStats("433") [0]
+				var chg_433 = newStats("433")[1]
+				var new_442 = newStats("442") [0]
+				var chg_442 = newStats("442")[1]
+				var new_352 = newStats("352") [0]
+				var chg_352 = newStats("352")[1]
+				var new_451 = newStats("451") [0]
+				var chg_451 = newStats("451")[1]
+				var new_4231 = newStats("4231") [0]
+				var chg_4231 = newStats("4231")[1]
+			};
+
+// 433			
+			if (chg_433 > 0){table_433 = '<span style="color: green">'+new_433.toFixed(1)+' / (+'+chg_433.toFixed(1)+')</span>'}
+			else if (chg_433 < 0){table_433 = '<span style="color:red">'+new_433.toFixed(1)+' / ('+chg_433.toFixed(1)+')</span>'}
+			else {table_433 = '<span style="color:black">'+new_433.toFixed(1)+'</span>'}
+			
+//442
+			if (chg_442 > 0){table_442 = '<span style="color: green">'+new_442.toFixed(1)+' / (+'+chg_442.toFixed(1)+')</span>'}
+			else if (chg_442 < 0){table_442 = '<span style="color:red">'+new_442.toFixed(1)+' / ('+chg_442.toFixed(1)+')</span>'}
+			else {table_442 = '<span style="color:black">'+new_442.toFixed(1)+'</span>'}
+
+			// ---------------------------
+			if (chg_352 > 0){table_352 = '<span style="color: green">'+new_352.toFixed(1)+' / (+'+chg_352.toFixed(1)+')</span>'}
+			else if (chg_352 < 0){table_352 = '<span style="color:red">'+new_352.toFixed(1)+' / ('+chg_352.toFixed(1)+')</span>'}
+			else {table_352 = '<span style="color:black">'+new_352.toFixed(1)+'</span>'}
+
+			// ---------------------------			
+			if (chg_451 > 0){table_451 = '<span style="color: green">'+new_451.toFixed(1)+' / (+'+chg_451.toFixed(1)+')</span>'}
+			else if (chg_451 < 0){table_451 = '<span style="color:red">'+new_451.toFixed(1)+' / ('+chg_451.toFixed(1)+')</span>'}
+			else {table_451 = '<span style="color:black">'+new_451.toFixed(1)+'</span>'}
+
+			//-----------------------------------------------
+			if (chg_4231 > 0){table_4231 = '<span style="color: green">'+new_4231.toFixed(1)+' / (+'+chg_4231.toFixed(1)+')</span>'}
+			else if (chg_4231 < 0){table_4231 = '<span style="color:red">'+new_4231.toFixed(1)+' / ('+chg_4231.toFixed(1)+')</span>'}
+			else {table_4231 = '<span style="color:black">'+new_4231.toFixed(1)+'</span>'}
+			
+			//-----------------------------------------------
+			if (chg_goalkeeping > 0){table_goalkeeping = '<span style="color: green">'+new_goalkeeping.toFixed(1)+' / (+'+chg_goalkeeping.toFixed(1)+')</span>'}
+			else if (chg_goalkeeping < 0){table_goalkeeping = '<span style="color:red">'+new_goalkeeping.toFixed(1)+' / ('+chg_goalkeeping.toFixed(1)+')</span>'}
+			else {table_goalkeeping = '<span style="color:black">'+new_goalkeeping.toFixed(1)+'</span>'}
+
+			//-----------------------------------------------
+			if (chg_defending > 0){table_defending = '<span style="color: green">'+new_defending.toFixed(1)+' / (+'+chg_defending.toFixed(1)+')</span>'}
+			else if (chg_defending < 0){table_defending = '<span style="color:red">'+new_defending.toFixed(1)+' / ('+chg_defending.toFixed(1)+')</span>'}
+			else {table_defending = '<span style="color:black">'+new_defending.toFixed(1)+'</span>'}
+			//-----------------------------------------------
+			if (chg_passing > 0){table_passing = '<span style="color: green">'+new_passing.toFixed(1)+' / (+'+chg_passing.toFixed(1)+')</span>'}
+			else if (chg_passing < 0){table_passing = '<span style="color:red">'+new_passing.toFixed(1)+' / ('+chg_passing.toFixed(1)+')</span>'}
+			else {table_passing = '<span style="color:black">'+new_passing.toFixed(1)+'</span>'}
+			//-----------------------------------------------
+			if (chg_dribbling > 0){table_dribbling = '<span style="color: green">'+new_dribbling.toFixed(1)+' / (+'+chg_dribbling.toFixed(1)+')</span>'}
+			else if (chg_dribbling < 0){table_dribbling = '<span style="color:red">'+new_dribbling.toFixed(1)+' / ('+chg_dribbling.toFixed(1)+')</span>'}
+			else {table_dribbling = '<span style="color:black">'+new_dribbling.toFixed(1)+'</span>'}
+			//-----------------------------------------------
+			if (chg_shot > 0){table_shot = '<span style="color: green">'+new_shot.toFixed(1)+' / (+'+chg_shot.toFixed(1)+')</span>'}
+			else if (chg_shot < 0){table_shot = '<span style="color:red">'+new_shot.toFixed(1)+' / ('+chg_shot.toFixed(1)+')</span>'}
+			else {table_shot = '<span style="color:black">'+new_shot.toFixed(1)+'</span>'}
+			//-----------------------------------------------
+			if (chg_headball > 0){table_headball = '<span style="color: green">'+new_headball.toFixed(1)+' / (+'+chg_headball.toFixed(1)+')</span>'}
+			else if (chg_headball < 0){table_headball = '<span style="color:red">'+new_headball.toFixed(1)+' / ('+chg_headball.toFixed(1)+')</span>'}
+			else {table_headball = '<span style="color:black">'+new_headball.toFixed(1)+'</span>'}
+			//-----------------------------------------------
+			if (chg_speed > 0){table_speed = '<span style="color: green">'+new_speed.toFixed(1)+' / (+'+chg_speed.toFixed(1)+')</span>'}
+			else if (chg_speed < 0){table_speed = '<span style="color:red">'+new_speed.toFixed(1)+' / ('+chg_speed.toFixed(1)+')</span>'}
+			else {table_speed = '<span style="color:black">'+new_speed.toFixed(1)+'</span>'}
+			//-----------------------------------------------
+			if (chg_endurance > 0){table_endurance = '<span style="color: green">'+new_endurance.toFixed(1)+' / (+'+chg_endurance.toFixed(1)+')</span>'}
+			else if (chg_endurance < 0){table_endurance = '<span style="color:red">'+new_endurance.toFixed(1)+' / ('+chg_endurance.toFixed(1)+')</span>'}
+			else {table_endurance = '<span style="color:black">'+new_endurance.toFixed(1)+'</span>'}
+
+			//-----------------------------------------------
+			var chg_os = (chg_endurance*0.2 + chg_speed*0.1 + chg_defending*0.2 + chg_passing*0.2 + chg_dribbling*0.2 + chg_shot*0.1)
+			var new_os = playerlist[i]["overall_strength"] + chg_os
+			
+			if (chg_os > 0){table_os = '<span style="color: green">'+new_os.toFixed(1)+' / +('+chg_os.toFixed(1)+')</span>'}
+			else if (chg_os < 0){table_os = '<span style="color:red">'+new_os.toFixed(1)+' / ('+chg_os.toFixed(1)+')</span>'}
+			else {table_os = '<span style="color:black">'+new_os.toFixed(1)+'</span>'}			
+			//-----------------------------------------------
+			var playerClass = "color: #4B4B4D;"
+			ResultsTable = ResultsTable.concat('<tbody><tr><td style="min-width:170px;"><img src="'+img+'" width="17" height="17" style="margin: 0 6px -3px 0;" /><a  style="'+playerClass+'" href="player.php?uid='+playerlist[i].uid+'">'+playerlist[i].name+'</a></td><td>'+playerlist[i].age.toFixed(0)+'</td><td style="min-width:110px;"><img src="https://rabona.io/img/flag/'+flagLinks[playerlist[i].country]+'" width="17" height="17" style="margin: 0 6px -3px 0;" />'+playerlist[i].country+'</td><td>'+table_os+'</td><td>'+table_goalkeeping+'</td><td>'+table_defending+'</td><td>'+table_passing+'</td><td>'+table_dribbling+'</td><td>'+table_shot+'</td><td>'+table_headball+'</td><td>'+table_speed+'</td><td>'+table_endurance+'</td><td>'+table_433+'</td><td>'+table_442+'</td><td>'+table_451+'</td><td>'+table_352+'</td><td>'+table_4231+'</td>');
+		};
+	
+	ResultsTable = ResultsTable.concat('</tbody></table>');
+
+///----------------------------------- OFFENSE		
+		var playerlist = offense;
+		ResultsTable = ResultsTable.concat('<div style="margin: 20px 0 10px 0; color: rgba(17, 51, 83, 0.6);">Attacker</div><table><thead><tr><th>Name</th><th>Age</th><th>Nationality</th><th><span class="tooltip">OS<span class="tooltiptext">Overall Strength</span></span></th><th><span class="tooltip">GK<span class="tooltiptext">Goalkeeping</span></span></th><th><span class="tooltip">DEF<span class="tooltiptext">Defending</span></span></th><th><span class="tooltip">PAS<span class="tooltiptext">Passing</span></span></th><th><span class="tooltip">DRI<span class="tooltiptext">Dribbling</span></span></th><th><span class="tooltip">SHT<span class="tooltiptext">Shot</span></span></th><th><span class="tooltip">HB<span class="tooltiptext">Headball</span></span></th><th><span class="tooltip">SPD<span class="tooltiptext">Speed</span></span></th><th><span class="tooltip">END<span class="tooltiptext">Endurance</span></span></th><th><span class="tooltip">433<span class="tooltiptext">4-3-3</span></span></th><th><span class="tooltip">442<span class="tooltiptext">4-4-2</span></span></th><th><span class="tooltip">451<span class="tooltiptext">4-5-1</span></span></th><th><span class="tooltip">352<span class="tooltiptext">3-5-2</span></span></th><th><span class="tooltip">4231<span class="tooltiptext">4-2-3-1</span></span></th></tr></thead>');
+
+		for (var i = 0, size = playerlist.length; i < size ; i++) {
+			var img = ("img/icon_player_4B4B4D.png")
+
+
+			if ( training_type == "") {
+				console.log("Training type is not selected.")
+			}
+			else{
+				console.log("Success.")
+				var new_goalkeeping		= newStats("goalkeeping")[0]
+				var chg_goalkeeping		= newStats("goalkeeping")[1]
+				var new_defending = newStats("defending")[0] 
+				var chg_defending = newStats("defending")[1]
+				var new_passing = newStats("passing") [0]
+				var chg_passing = newStats("passing")[1]
+				var new_dribbling = newStats("dribbling")[0] 
+				var chg_dribbling = newStats("dribbling")[1]
+				var new_shot = newStats("shot") [0]
+				var chg_shot = newStats("shot")[1]
+				var new_headball = newStats("headball") [0]
+				var chg_headball = newStats("headball")[1]
+				var new_speed = newStats("speed") [0]
+				var chg_speed = newStats("speed")[1]
+				var new_endurance = newStats("speed") [0]
+				var chg_endurance = newStats("speed")[1]
+				var new_433 = newStats("433") [0]
+				var chg_433 = newStats("433")[1]
+				var new_442 = newStats("442") [0]
+				var chg_442 = newStats("442")[1]
+				var new_352 = newStats("352") [0]
+				var chg_352 = newStats("352")[1]
+				var new_451 = newStats("451") [0]
+				var chg_451 = newStats("451")[1]
+				var new_4231 = newStats("4231") [0]
+				var chg_4231 = newStats("4231")[1]
+			};
+			
+			if (chg_433 > 0){table_433 = '<span style="color: green">'+new_433.toFixed(1)+' / (+'+chg_433.toFixed(1)+')</span>'}
+			else if (chg_433 < 0){table_433 = '<span style="color:red">'+new_433.toFixed(1)+' / ('+chg_433.toFixed(1)+')</span>'}
+			else {table_433 = '<span style="color:black">'+new_433.toFixed(1)+'</span>'}
+			
+
+			if (chg_442 > 0){table_442 = '<span style="color: green">'+new_442.toFixed(1)+' / (+'+chg_442.toFixed(1)+')</span>'}
+			else if (chg_442 < 0){table_442 = '<span style="color:red">'+new_442.toFixed(1)+' / ('+chg_442.toFixed(1)+')</span>'}
+			else {table_442 = '<span style="color:black">'+new_442.toFixed(1)+'</span>'}
+
+			// ---------------------------
+			if (chg_352 > 0){table_352 = '<span style="color: green">'+new_352.toFixed(1)+' / (+'+chg_352.toFixed(1)+')</span>'}
+			else if (chg_352 < 0){table_352 = '<span style="color:red">'+new_352.toFixed(1)+' / ('+chg_352.toFixed(1)+')</span>'}
+			else {table_352 = '<span style="color:black">'+new_352.toFixed(1)+'</span>'}
+
+			// ---------------------------
+			
+						
+			if (chg_451 > 0){table_451 = '<span style="color: green">'+new_451.toFixed(1)+' / (+'+chg_451.toFixed(1)+')</span>'}
+			else if (chg_451 < 0){table_451 = '<span style="color:red">'+new_451.toFixed(1)+' / ('+chg_451.toFixed(1)+')</span>'}
+			else {table_451 = '<span style="color:black">'+new_451.toFixed(1)+'</span>'}
+
+			
+			//-----------------------------------------------
+			if (chg_4231 > 0){table_4231 = '<span style="color: green">'+new_4231.toFixed(1)+' / (+'+chg_4231.toFixed(1)+')</span>'}
+			else if (chg_4231 < 0){table_4231 = '<span style="color:red">'+new_4231.toFixed(1)+' / ('+chg_4231.toFixed(1)+')</span>'}
+			else {table_4231 = '<span style="color:black">'+new_4231.toFixed(1)+'</span>'}
+
+
+			if (chg_goalkeeping > 0){table_goalkeeping = '<span style="color: green">'+new_goalkeeping.toFixed(1)+' / (+'+chg_goalkeeping.toFixed(1)+')</span>'}
+			else if (chg_goalkeeping < 0){table_goalkeeping = '<span style="color:red">'+new_goalkeeping.toFixed(1)+' / ('+chg_goalkeeping.toFixed(1)+')</span>'}
+			else {table_goalkeeping = '<span style="color:black">'+new_goalkeeping.toFixed(1)+'</span>'}
+			//----------------------------------------------- DEF
+			if (chg_defending > 0){table_defending = '<span style="color: green">'+new_defending.toFixed(1)+' / (+'+chg_defending.toFixed(1)+')</span>'}
+			else if (chg_defending < 0){table_defending = '<span style="color:red">'+new_defending.toFixed(1)+' / ('+chg_defending.toFixed(1)+')</span>'}
+			else {table_defending = '<span style="color:black">'+new_defending.toFixed(1)+'</span>'}
+			//----------------------------------------------- PASS
+			if (chg_passing > 0){table_passing = '<span style="color: green">'+new_passing.toFixed(1)+' / (+'+chg_passing.toFixed(1)+')</span>'}
+			else if (chg_passing < 0){table_passing = '<span style="color:red">'+new_passing.toFixed(1)+' / ('+chg_passing.toFixed(1)+')</span>'}
+			else {table_passing = '<span style="color:black">'+new_passing.toFixed(1)+'</span>'}
+			//----------------------------------------------- DRIB
+			if (chg_dribbling > 0){table_dribbling = '<span style="color: green">'+new_dribbling.toFixed(1)+' / (+'+chg_dribbling.toFixed(1)+')</span>'}
+			else if (chg_dribbling < 0){table_dribbling = '<span style="color:red">'+new_dribbling.toFixed(1)+' / ('+chg_dribbling.toFixed(1)+')</span>'}
+			else {table_dribbling = '<span style="color:black">'+new_dribbling.toFixed(1)+'</span>'}
+			//-----------------------------------------------SHOT
+			if (chg_shot > 0){table_shot = '<span style="color: green">'+new_shot.toFixed(1)+' / (+'+chg_shot.toFixed(1)+')</span>'}
+			else if (chg_shot < 0){table_shot = '<span style="color:red">'+new_shot.toFixed(1)+' / ('+chg_shot.toFixed(1)+')</span>'}
+			else {table_shot = '<span style="color:black">'+new_shot.toFixed(1)+'</span>'}
+			//-----------------------------------------------HB
+			if (chg_headball > 0){table_headball = '<span style="color: green">'+new_headball.toFixed(1)+' / (+'+chg_headball.toFixed(1)+')</span>'}
+			else if (chg_headball < 0){table_headball = '<span style="color:red">'+new_headball.toFixed(1)+' / ('+chg_headball.toFixed(1)+')</span>'}
+			else {table_headball = '<span style="color:black">'+new_headball.toFixed(1)+'</span>'}
+			//----------------------------------------------- SPD
+			if (chg_speed > 0){table_speed = '<span style="color: green">'+new_speed.toFixed(1)+' / (+'+chg_speed.toFixed(1)+')</span>'}
+			else if (chg_speed < 0){table_speed = '<span style="color:red">'+new_speed.toFixed(1)+' / ('+chg_speed.toFixed(1)+')</span>'}
+			else {table_speed = '<span style="color:black">'+new_speed.toFixed(1)+'</span>'}
+			//-----------------------------------------------
+			if (chg_endurance > 0){table_endurance = '<span style="color: green">'+new_endurance.toFixed(1)+' / (+'+chg_endurance.toFixed(1)+')</span>'}
+			else if (chg_endurance < 0){table_endurance = '<span style="color:red">'+new_endurance.toFixed(1)+' / ('+chg_endurance.toFixed(1)+')</span>'}
+			else {table_endurance = '<span style="color:black">'+new_endurance.toFixed(1)+'</span>'}
+			
+			//-----------------------------------------------
+			var chg_os = (chg_endurance*0.2 + chg_speed*0.1 + chg_defending*0.15 +chg_passing*0.2 + chg_dribbling*0.15 + chg_shot*0.2)
+			var new_os = playerlist[i]["overall_strength"] + chg_os
+			
+			if (chg_os > 0){table_os = '<span style="color: green">'+new_os.toFixed(1)+' / +('+chg_os.toFixed(1)+')</span>'}
+			else if (chg_os < 0){table_os = '<span style="color:red">'+new_os.toFixed(1)+' / ('+chg_os.toFixed(1)+')</span>'}
+			else {table_os = '<span style="color:black">'+new_os.toFixed(1)+'</span>'}			
+			//-----------------------------------------------
+			
+			var playerClass = "color: #4B4B4D;"
+			ResultsTable = ResultsTable.concat('<tbody><tr><td style="min-width:170px;"><img src="'+img+'" width="17" height="17" style="margin: 0 6px -3px 0;" /><a  style="'+playerClass+';" href="player.php?uid='+playerlist[i].uid+'">'+playerlist[i].name+'</a></td><td>'+playerlist[i].age.toFixed(0)+'</td><td style="min-width:110px;"><img src="https://rabona.io/img/flag/'+flagLinks[playerlist[i].country]+'" width="17" height="17" style="margin: 0 6px -3px 0;" />'+playerlist[i].country+'</td><td>'+table_os+'</td><td>'+table_goalkeeping+'</td><td>'+table_defending+'</td><td>'+table_passing+'</td><td>'+table_dribbling+'</td><td>'+table_shot+'</td><td>'+table_headball+'</td><td>'+table_speed+'</td><td>'+table_endurance+'</td><td>'+table_433+'</td><td>'+table_442+'</td><td>'+table_451+'</td><td>'+table_352+'</td><td>'+table_4231+'</td>');
+		};
+
+		ResultsTable = ResultsTable.concat('</tbody></table>');
+		document.getElementById("team").innerHTML = ResultsTable;
+		return (players) 
+	};
+
+	try {loadTeam()} catch {console.log("Error loading team")};
+	
+
+</script>
+</body></html>
