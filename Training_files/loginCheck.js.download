@@ -1,0 +1,46 @@
+// Wait for the DOM to be ready and page loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Check on pageload if anyone is logged in
+    const userCheck = userLoggedIn();
+    console.log(userCheck)
+
+    // Button for logging a user out
+    const logoutButton = document.getElementById('logout');
+
+    // DIVs
+    const status = document.getElementById('status');
+    const mainDiv = document.getElementById('main');
+
+    // Is the user already logged in?
+    if (userCheck) {
+        logoutButton.style.display = 'initial';
+        
+    } else {
+        window.location = "index.php";
+    }
+
+
+
+    // When the logout button is clicked
+    logoutButton.addEventListener('click', (e) => {
+        // Stop the default action from doing anything
+        e.preventDefault();
+
+        logoutUser();
+        window.location.reload();
+    });
+    
+    
+
+});
+
+const userCheck = userLoggedIn();
+const userName = userCheck.username;
+function userLoggedIn() {
+    const value = localStorage.getItem('__keychainAuth');
+    return value ? JSON.parse(value) : false;
+}
+
+function logoutUser() {
+    localStorage.removeItem('__keychainAuth');
+}

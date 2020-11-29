@@ -1,0 +1,14 @@
+var serverKeyword = "rabona";
+var transferAccount ="rabona"
+var apiserver = 'https://api.rabona.io/';
+console.log(location.hostname)
+if (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.hostname === "fm.rondras.com") {
+  console.log("Testserver detected")
+  var serverKeyword = "rabona-test";
+  var apiserver = 'http://api.rondras.com/';
+} else {
+  console.log("Main Server detected")
+  var serverKeyword = "rabona";
+  var apiserver = 'https://api.rabona.io/';
+  
+}

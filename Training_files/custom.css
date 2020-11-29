@@ -1,0 +1,257 @@
+.circle {
+    display: inline-block;
+    margin: 1em;
+}
+
+.circles-decimals {
+    font-size: .4em;
+}
+
+.modal_table {
+  border: none;
+}
+
+table {
+  width: 100%;
+  margin: 0 0 40px 0;
+}
+
+.tableheadline {
+  color: rgba(17, 51, 83, 0.6);
+  margin: 0 0 10px 0;
+}
+
+h2 {font-size: 180%;}
+h3 {font-size: 140%;}
+h4 {font-size: 120%;}
+
+/* Tooltip
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: default;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 140px;
+  bottom: 140%;
+  left: 50%;
+  margin-left: -70px; /* Use half of the width (120/2 = 60), to center the tooltip */
+  background-color: rgb(0,0,0,0.6);
+  color: #fff;
+  text-align: center;
+  font-weight:normal;
+  padding: 5px 0;
+  border-radius: 6px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.tooltip .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgb(0,0,0,0.6) transparent transparent transparent;
+}
+
+/* Main Navigation (Opacity and Transition)
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.main_nav a img {
+opacity: 1.0;
+-webkit-transition:opacity 220ms ease-out;
+-moz-transition:opacity 220ms ease-out;
+-o-transition:opacity 220ms ease-out;
+transition:opacity 220ms ease-out;
+}
+
+.main_nav a:hover img {
+opacity: 0.7;
+-webkit-transition:opacity 260ms ease-out;
+-moz-transition:opacity 260ms ease-out;
+-o-transition:opacity 260ms ease-out;
+transition:opacity 260ms ease-out;
+}
+
+.main_nav a:link {
+opacity: 1.0;
+-webkit-transition:opacity 220ms ease-out;
+-moz-transition:opacity 220ms ease-out;
+-o-transition:opacity 220ms ease-out;
+transition:opacity 220ms ease-out;
+}
+
+.main_nav a:hover {
+opacity: 0.7;
+-webkit-transition:opacity 260ms ease-out;
+-moz-transition:opacity 260ms ease-out;
+-o-transition:opacity 260ms ease-out;
+transition:opacity 260ms ease-out;
+text-decoration:none;
+}
+
+/* Modal - The Modal (background)
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 40px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  max-width: 550px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+/* Add Animation */
+@keyframes animatetop {
+  from {top: -300px; opacity: 0}
+  to {top: 0; opacity: 1}
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  margin-top: -16px;
+}
+
+.close:hover,
+.close:focus {
+  color: #222;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Sections
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.section {
+  padding: 8rem 0 7rem;
+  text-align: center;
+}
+.section-heading,
+.section-description {
+  margin-bottom: 1.2rem;
+}
+
+/* Values
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.values {
+  /* background-image: url('../images/values-bg.jpg'); */
+  background-color: #009999;
+  background-size: cover;
+  color: #fff;
+  padding-bottom: 5rem;
+}
+.value-multiplier {
+  margin-bottom: .5rem;
+  color: #11DFC7;
+}
+.value-heading {
+  margin-bottom: .3rem;
+}
+.value-description {
+  opacity: .8;
+  font-weight: 300;
+}
+
+/* Categories
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.categories {
+  /* background-image: url('../images/values-bg.jpg'); */
+  background-color: #006699;
+  background-size: cover;
+  color: #fff;
+}
+.categories .section-description { 
+  margin-bottom: 4rem;
+}
+
+/* Bigger than 550 */
+@media (min-width: 550px) {
+  .section {
+    padding: 12rem 0 11rem;
+  }
+}
+    
+/* Bigger than 750 */
+@media (min-width: 750px) {
+  .section {
+    padding: 14rem 0 15rem;
+  }
+  .section-description {
+    max-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .categories {
+    padding: 15rem 0 8rem;
+  }
+}
+
+/* Bigger than 1000 */
+@media (min-width: 1000px) {
+  .section {
+    padding: 20rem 0 19rem;
+  }
+}
+
+/*   LINE UP  */
+#lineup_field{
+  width: 100%;
+  height: 420px;
+  position: relative;
+}
+
+#lineup_field img{
+  position: absolute;
+  right: 0px;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  width: 100%;
+}
+
+.lineup_circle{
+  display: none;
+  width: 2.0rem;
+  height: 2.0rem;
+  line-height: 2.0rem;
+  text-align: center;
+  border-radius: 100%;
+  border: 1px solid #fff;
+  font-size: 1.4rem;
+  box-shadow: 0 0 5px rgba(0,0,0,.6);
+  position: absolute;
+  color: white;
+  margin-bottom: 0px;
+}

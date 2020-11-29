@@ -1,0 +1,33 @@
+console.log("Hier bin ich")
+// Wait for the DOM to be ready and page loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Check on pageload if anyone is logged in
+    console.log("Debug")
+    const checkUser = userExists(userName);
+
+
+    // Is the user already logged in?
+    if (checkUser) {
+        console.log(checkUser);
+        
+    } else {
+        console.log("user does not exist")
+        window.location = "starterpack.php";
+    }
+});
+
+
+function userExists(usrName) {
+        value = null;
+ 	    $.getJSON({		
+     		type: "GET",		
+     		url: apiserver +'userinfo?user='+usrName,		
+     		async: false,		
+     		success: function(data){
+                usr = data.user;
+            }		
+ 	    });
+        
+        console.log(usr);
+        return usr ? usr : false;
+};
