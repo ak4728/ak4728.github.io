@@ -80,7 +80,7 @@ main {
 }
 .stage {
   position: absolute;
-  width: 100%;
+  width: 80%;
   height: 100%;
   top: 0;
   perspective-origin: 50% -200px;
@@ -92,8 +92,8 @@ main {
 .stats1 {
   position: absolute;
   width: 10%;
-  height: 80%;
-  right: 30%;
+  height: 100%;
+  right: 25%;
   top: 20%;
   perspective-origin: 50% -200px;
   perspective: 1100px;
@@ -104,8 +104,8 @@ main {
 .stats2 {
   position: absolute;
   width: 10%;
-  height: 80%;
-  left: 30%;
+  height: 100%;
+  left: 25%;
   top: 20%;
   perspective-origin: 50% -200px;
   perspective: 1100px;
