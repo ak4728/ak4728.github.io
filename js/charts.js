@@ -98,17 +98,59 @@
       data: {
         labels: [user_1,user_2],
         datasets: [{
-          label: "Ball Contacts",
+          label: "Corners",
           backgroundColor: ["#3e95cd", "#8e5ea2"],
-          data: [home["ball_contacts"],away["ball_contacts"]]
+          data: [home["corners"],away["corners"]]
         }]
       },
       options: {
         title: {
           display: true,
-          text: 'Ball Contacts',
+          text: 'Corners',
           fontColor: "white",
           fontSize:17
         }
       }
-  });
+    });
+
+
+
+    new Chart(document.getElementById("pie-chart-5"), {
+      type: 'pie',
+      data: {
+        labels: [user_1,user_2],
+        datasets: [{
+          label: "Fouls",
+          backgroundColor: ["#3e95cd", "#8e5ea2"],
+          data: [home["fouls"],away["fouls"]]
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Fouls',
+          fontColor: "white",
+          fontSize:17
+        }
+      }
+    });
+
+    new Chart(document.getElementById("pie-chart-6"), {
+      type: 'pie',
+      data: {
+        labels: [user_1,user_2],
+        datasets: [{
+          label: "Goal Saves",
+          backgroundColor: ["#3e95cd", "#8e5ea2"],
+          data: [home["goal_saves"],away["goal_saves"]]
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Goal Saves',
+          fontColor: "white",
+          fontSize:17
+        }
+      }
+    });
