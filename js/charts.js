@@ -15,7 +15,7 @@
 
     $.getJSON({
       type: "GET",
-      url: apiserver +'gamestats?match_id=919443',
+      url: apiserver +'gamestats?match_id='+matchid,
       async: false,
       success: function(data){
         console.log("data",data);
