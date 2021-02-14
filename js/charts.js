@@ -41,7 +41,6 @@
           display: true,
           text: 'Dribblings',
           fontColor: "white",
-          fontSize:17
         },
 
       }
@@ -62,7 +61,6 @@
               display: true,
               text: 'Passes',
               fontColor: "white",
-              fontSize:17
             },
 
           }
@@ -85,7 +83,6 @@
             display: true,
             text: 'Shots',
             fontColor: "white",
-            fontSize:17
           },
           labels :{
             fontColor: "white"
@@ -109,7 +106,6 @@
           display: true,
           text: 'Corners',
           fontColor: "white",
-          fontSize:17
         }
       }
     });
@@ -131,7 +127,6 @@
           display: true,
           text: 'Fouls',
           fontColor: "white",
-          fontSize:17
         }
       }
     });
@@ -151,7 +146,6 @@
           display: true,
           text: 'Goal Saves',
           fontColor: "white",
-          fontSize:17
         }
       }
     });
