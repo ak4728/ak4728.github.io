@@ -93,15 +93,15 @@ main {
   position: absolute;
   width: 13%;
   height: 50%;
-  right: 5%;
-  z-index: 1;
+  left: 5%;
   top: 10%;
+  z-index: 1;
 }
 .stats2 {
   position: absolute;
   width: 13%;
   height: 50%;
-  left: 5%;
+  right: 5%;
   top: 10%;
   z-index: 1;
 }
