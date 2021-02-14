@@ -1,0 +1,181 @@
+
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Training Simulator</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="./Training_files/css" rel="stylesheet" type="text/css">
+	<link rel="icon" type="image/png" href="https://rabona.io/img/favicon.png">
+	<link rel="stylesheet" href="./Training_files/normalize.css">
+	<link rel="stylesheet" href="./Training_files/skeleton.css">
+	<link rel="stylesheet" href="./Training_files/custom.css">
+  <link rel="stylesheet" href="./css/style.css">
+	<script src="./Training_files/jquery.min.js.download"></script>
+	<script src="./Training_files/userCheck.js.download"></script>
+	<script src="./Training_files/config.js.download"></script>
+	<script src="./Training_files/commands.js.download"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.2/velocity.min.js"></script>
+  <script src="./js/field.js"></script>
+	<script>var breadcrumbCurrent = " › Training"</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  <script src="./js/charts.js">    </script>
+
+</head>
+<body data-new-gr-c-s-check-loaded="14.984.0" data-gr-ext-installed="">
+
+	<!-- Primary Page Layout -->
+
+	    <script>
+
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+	const teamid = urlParams.get('teamid');
+	$.getJSON({
+		type: "GET",
+		url: apiserver +'userinfo?id='+teamid,
+		async: false,
+		success: function(data){
+			teaminfo  = data;
+		}
+	});
+	const userName = teaminfo.user
+
+  
+    function formatNumber(num) {
+      num = parseInt(num)
+      num = num.toFixed(0)
+      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    };
+      function userInfo (){
+        var BallDollarBalance = 0;
+        var userData = {}
+        $.getJSON({
+          type: "GET",
+          url: apiserver +'userinfo?user='+userName,
+          async: false,	
+          success: function(data){
+            BallDollarBalance = data.currency;
+            userData = data
+          }
+        });
+        return (userData);	
+      };
+      var userData = userInfo()
+      BallDollarBalance = userData.currency;
+    </script>
+
+  <div class="container">
+    <div class="row" style="margin-top: 17px;">
+    </div>
+  </div>
+
+
+<!-- Javascript part -->
+<script>
+
+  var flagLinks={}
+  flagLinks['China']= "china.png"
+  flagLinks['Germany']= "germany.png"
+  flagLinks['Italy']= "italy.png"
+  flagLinks['France']= "france.png"
+  flagLinks['UK']= "united-kingdom.png"
+  flagLinks['Spain']= "spain.png"
+  flagLinks['Netherlands']= "netherlands.png"
+  flagLinks['Belgium']= "belgium.png"
+  flagLinks['Russia']= "russia.png"
+  flagLinks['Venezuela']= "venezuela.png"
+  flagLinks['Nigeria']= "nigeria.png"
+  flagLinks['Portugal']= "portugal.png"
+  flagLinks['Austria']= "austria.png"
+  flagLinks['Argentina']= "argentina.png"
+  flagLinks['Brazil']= "brazil.png"
+  flagLinks['Japan']= "japan.png"
+  flagLinks['Uruguay']= "uruguay.png"
+  flagLinks['Poland']= "poland.png"
+  flagLinks['Sweden']= "sweden.png"
+  flagLinks['Luxembourg']= "luxembourg.png"
+  flagLinks['Czechia']= "czech-republic.png"
+  flagLinks['Turkey']= "turkey.png"
+  flagLinks['South Korea']= "south-korea.png"
+	
+</script>
+
+				<script>
+					
+					$.getJSON({
+						type: "GET",
+						url: apiserver +'team?user='+userName,
+				        url: apiserver +'team?frozen=0&user='+userName,
+						async: false,
+						success: function(data){
+							players = data.players;
+						}
+					});
+					append_json(players);
+					function append_json(players){
+						var table = document.getElementById('gable');
+						
+
+						players.forEach(function(object) {
+              ///console.log(object.overall_strength);
+						});
+					}
+
+       
+       </script>
+
+                
+<main>
+  <div class="static">
+    <h1 class="js-heading">Rabona Visualizer</h1>
+    <p class="js-subheading">Visualization using CSS 3D transforms.<br><span style="font-size: 11px">Adapted from xyz</span></p>
+    <div class="js-switcher switcher">
+      <a href="#" class="js-switch disabled switch-btn">HOME</a><a href="#" class="js-switch switch-btn">AWAY</a>
+    </div>
+  </div>
+  <div class="js-stage stage texture">
+    <div class="js-world world">
+      <div class="team js-team">
+        <!-- Team cards / icons goes here -->
+      </div>
+      <div class="terrain js-terrain">
+        <div class="field field--alt"></div>
+        <div class="field ground">
+          <div class="field__texture field__texture--gradient"></div>
+          <div class="field__texture field__texture--gradient-b"></div>
+          <div class="field__texture field__texture--grass"></div>
+          <div class="field__line field__line--goal"></div>
+          <div class="field__line field__line--goal field__line--goal--far"></div>
+          <div class="field__line field__line--outline"></div>
+          <div class="field__line field__line--penalty"></div>
+          <div class="field__line field__line--penalty-arc"></div>
+          <div class="field__line field__line--penalty-arc field__line--penalty-arc--far"></div>
+          <div class="field__line field__line--mid"></div>
+          <div class="field__line field__line--circle"></div>
+          <div class="field__line field__line--penalty field__line--penalty--far"></div>
+        </div>
+        <div class="field__side field__side--front"></div>
+        <div class="field__side field__side--left"></div>
+        <div class="field__side field__side--right"></div>
+        <div class="field__side field__side--back"></div>
+      </div>
+    </div>
+    <div class="loading js-loading">PLEASE WAIT...</div>
+  </div>
+  <div class="stats1">
+
+      <canvas id="pie-chart" width="200" height="200"></canvas>
+      <canvas id="pie-chart-2" width="200" height="200"></canvas>
+      <canvas id="pie-chart-3" width="200" height="200"></canvas>  
+
+      
+
+  </div>
+
+  <div class="stats2">
+      <canvas id="pie-chart-4" width="200" height="200"></canvas>
+      <canvas id="pie-chart-5" width="200" height="200"></canvas>
+      <canvas id="pie-chart-6" width="200" height="200"></canvas>  
+  </div>
+</main>
+
+</body>
+</html>
