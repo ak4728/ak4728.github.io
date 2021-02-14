@@ -188,7 +188,7 @@ for (var i = 0; i < legendItems.length; i++) {
 }
 
 function legendClickCallback(legendItemIndex){
-  document.querySelectorAll('.myChart').forEach((chartItem,index)=>{
+  document.querySelectorAll('.stats2').forEach((chartItem,index)=>{
     var chart = Chart.instances[index];
     var dataItem = chart.data.datasets[legendItemIndex]    
     if(dataItem.hidden == true || dataItem.hidden == null){
