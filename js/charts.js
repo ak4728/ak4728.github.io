@@ -11,7 +11,7 @@
         club_1 = data.club_1;
         club_2 = data.club_2;
       }
-    });
+    }); 
 
     $.getJSON({
       type: "GET",
