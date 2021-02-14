@@ -33,19 +33,10 @@
 
   $switcher = null;
 
-
 	const queryString = window.location.search;
 	const urlParams = new URLSearchParams(queryString);
-	const teamid = urlParams.get('teamid');
-	$.getJSON({
-		type: "GET",
-		url: apiserver +'userinfo?id='+teamid,
-		async: false,
-		success: function(data){
-			teaminfo  = data;
-		}
-	});
-	const userName = teaminfo.user
+  const matchid = urlParams.get('matchid');
+
 
   var flagLinks={}
   flagLinks['China']= "china.png"
@@ -71,16 +62,6 @@
   flagLinks['Czechia']= "czech-republic.png"
   flagLinks['Turkey']= "turkey.png"
   flagLinks['South Korea']= "south-korea.png"
-
-  $.getJSON({
-    type: "GET",
-    url: apiserver +'team?user='+userName,
-        url: apiserver +'team?frozen=0&user='+userName,
-    async: false,
-    success: function(data){
-      players = data.players;
-    }
-  });
 
   formation = {
     "451" : [
@@ -410,7 +391,7 @@
 
   $.getJSON({
     type: "GET",
-    url: apiserver +'matchstats?match_id=919443',
+    url: apiserver +'matchstats?match_id='+matchid,
     async: false,
     success: function(data){
       lineup = JSON.parse(data.lineup_team_1);
@@ -454,10 +435,6 @@
       }      
     });
   }
-
-
-  
-
 
   state = {
     home: true,

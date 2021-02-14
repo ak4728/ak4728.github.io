@@ -107,11 +107,7 @@ main {
   height: 100%;
   left: 25%;
   top: 20%;
-  perspective-origin: 50% -200px;
-  perspective: 1100px;
   z-index: 1;
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
 }
 .world {
   position: absolute;

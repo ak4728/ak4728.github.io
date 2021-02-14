@@ -3,7 +3,7 @@
 
     $.getJSON({
       type: "GET",
-      url: apiserver +'matchstats?match_id=919443',
+      url: apiserver +'matchstats?match_id='+matchid,
       async: false,
       success: function(data){
         user_1 = data.team_user_1;
@@ -104,6 +104,7 @@
         }]
       },
       options: {
+        responsive:true,
         title: {
           display: true,
           text: 'Corners',

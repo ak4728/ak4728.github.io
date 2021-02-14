@@ -9,7 +9,6 @@
 	<link rel="stylesheet" href="./Training_files/custom.css">
   <link rel="stylesheet" href="./css/style.css">
 	<script src="./Training_files/jquery.min.js.download"></script>
-	<script src="./Training_files/userCheck.js.download"></script>
 	<script src="./Training_files/config.js.download"></script>
 	<script src="./Training_files/commands.js.download"></script>
   <script src="./js/velocity.min.js"></script>
@@ -27,39 +26,7 @@
 
 	const queryString = window.location.search;
 	const urlParams = new URLSearchParams(queryString);
-	const teamid = urlParams.get('teamid');
-	$.getJSON({
-		type: "GET",
-		url: apiserver +'userinfo?id='+teamid,
-		async: false,
-		success: function(data){
-			teaminfo  = data;
-		}
-	});
-	const userName = teaminfo.user
-
-  
-    function formatNumber(num) {
-      num = parseInt(num)
-      num = num.toFixed(0)
-      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-    };
-      function userInfo (){
-        var BallDollarBalance = 0;
-        var userData = {}
-        $.getJSON({
-          type: "GET",
-          url: apiserver +'userinfo?user='+userName,
-          async: false,	
-          success: function(data){
-            BallDollarBalance = data.currency;
-            userData = data
-          }
-        });
-        return (userData);	
-      };
-      var userData = userInfo()
-      BallDollarBalance = userData.currency;
+  const matchid = urlParams.get('matchid');
     </script>
 
   <div class="container">
@@ -98,29 +65,6 @@
 	
 </script>
 
-				<script>
-					
-					$.getJSON({
-						type: "GET",
-						url: apiserver +'team?user='+userName,
-				        url: apiserver +'team?frozen=0&user='+userName,
-						async: false,
-						success: function(data){
-							players = data.players;
-						}
-					});
-					append_json(players);
-					function append_json(players){
-						var table = document.getElementById('gable');
-						
-
-						players.forEach(function(object) {
-              ///console.log(object.overall_strength);
-						});
-					}
-
-       
-       </script>
 
                 
 <main>
