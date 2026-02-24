@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Bus Pings — Ulteig / Kepler & PowerBI</title>
+  <title>RTD Bus Pings — Kepler & PowerBI</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
   <link href="http://d1a3f4spazzrp4.cloudfront.net/kepler.gl/uber-fonts/4.0.0/superfine.css" rel="stylesheet">
@@ -25,23 +25,21 @@
   </style>
 </head>
 <body>
-  <h1>Bus Pings — Ulteig</h1>
+  <h1>RTD Bus Pings</h1>
 
   <div class="section">
     <h2>Power BI: Bus Pings / Dashboard</h2>
-    <p>Embedded Power BI report (same as original `test.html`).</p>
+    <p>Embedded Power BI report.</p>
     <iframe width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=2a99fe8c-5365-4af9-9339-fa9cf22f5773&autoAuth=true&ctid=ce64a8d4-b335-4ff9-8d32-fab113043df5&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXVzLW5vcnRoLWNlbnRyYWwtcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D" allowfullscreen="true"></iframe>
   </div>
 
   <div class="section">
-    <h2>Kepler.gl map (Ulteig)</h2>
-    <p>This page preserves the Kepler/Ulteig scripts from the original `ulteig.html`. You can load your dataset into the Kepler panel or paste a saved kepler map configuration.</p>
+    <h2>Kepler.gl map (RTD Bus Pings)</h2>
+    <p>Kepler map area. Load your bus pings dataset into the Kepler panel or paste a saved kepler map configuration.</p>
     <div id="kepler-root"></div>
   </div>
 
   <script>
-    // Minimal Kepler placeholder bootstrap.
-    // If you have a kepler config JSON, you can pass it to kepler.gl.create and render here.
     (function(){
       if(!window.keplerGl) return;
       try{
