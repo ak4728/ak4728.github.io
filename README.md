@@ -7,6 +7,7 @@ Quick links (Medium articles):
 - H3 taxi pickups (Uber H3 overview & examples): https://medium.com/better-programming/playing-with-ubers-hexagonal-hierarchical-spatial-index-h3-ed8d5cd7739d
 - Denver bike & ped data with Kepler.gl: https://medium.com/@abdullahkurkcu/downloading-and-visualizing-denver-bike-and-ped-data-with-python-and-kepler-gl-f0b030b7eac5
 - Visualizing bus trajectories in Denver: https://medium.com/data-science/visualizing-bus-trajectories-in-denver-85ff02f3a746
+- Do vehicle release patterns in microsimulation actually matter?: https://medium.com/ak-modeling-engineering/do-vehicle-release-patterns-in-microsimulation-actually-matter-bfb5b7ae9519
 
 External visualization tools:
 
