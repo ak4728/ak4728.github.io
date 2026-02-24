@@ -8,6 +8,16 @@ Quick links (Medium articles):
 - Denver bike & ped data with Kepler.gl: https://medium.com/@abdullahkurkcu/downloading-and-visualizing-denver-bike-and-ped-data-with-python-and-kepler-gl-f0b030b7eac5
 - Visualizing bus trajectories in Denver: https://medium.com/data-science/visualizing-bus-trajectories-in-denver-85ff02f3a746
 
+External visualization tools:
+
+- Corridor Travel Time Analyzer (TransModeler VRC): https://ak4728.github.io/TransModeler-VRC-Visualization/
+- Traffic Signal Release Function Visualizer: https://ak4728.github.io/Traffic-Visualization-Tools/
+- Santa Fe O-D Matrix: https://ak4728.github.io/Traffic-Visualization-Tools/SantaFeOD.html
+- PENA Boulevard Travel Times: https://ak4728.github.io/Traffic-Visualization-Tools/PenaViz.html
+- Conference Seating Simulation: https://ak4728.github.io/Traffic-Visualization-Tools/confSeating.html
+- Eaton Fire Timeline: https://ak4728.github.io/Traffic-Visualization-Tools/Eaton%20Fire.html
+- GitHub repo: https://github.com/ak4728/Traffic-Visualization-Tools
+
 Repository notes:
 
 - The original Folium/Leaflet index map is preserved as `h3_taxi_pickups.html`.
