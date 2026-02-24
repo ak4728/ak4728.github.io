@@ -15,10 +15,3 @@ Repository notes:
 - The conceptual Morrison road-diet before/after slider is `morrison_road_diet_before_after.html`.
 - The contagion SIR simulator is `contagion_simulator.html`.
 
-If you'd like, I can populate the H3 page with an H3-based taxi pickups demo (using the linked article as a guide) or add a Kepler saved configuration for any of the maps.
-
-Contact / Next steps:
-
-- Tell me which pages you want data/configs added to and I will integrate them.
-- Tell me if you want alternate filenames or a different landing page layout.
-
