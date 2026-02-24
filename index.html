@@ -1,70 +1,39 @@
 <!DOCTYPE html>
-<head>    
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    
-        <script>
-            L_NO_TOUCH = false;
-            L_DISABLE_3D = false;
-        </script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.5.1/dist/leaflet.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.5.1/dist/leaflet.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
-    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
-    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
-    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
-    
-            <meta name="viewport" content="width=device-width,
-                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-            <style>
-                #map_f30378b111cf47e087ba38d2dd44c93c {
-                    position: relative;
-                    width: 100.0%;
-                    height: 100.0%;
-                    left: 0.0%;
-                    top: 0.0%;
-                }
-            </style>
-        
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Project Index</title>
+  <style>body{font-family:Arial,Helvetica,sans-serif;padding:2rem}h1{margin-bottom:0.5rem}ul{line-height:1.8}</style>
 </head>
-<body>    
-    
-            <div class="folium-map" id="map_f30378b111cf47e087ba38d2dd44c93c" ></div>
-        
+<body>
+  <h1>Pages</h1>
+  <p>This index lists the HTML pages in the site. The original map index has been preserved as <a href="index_h3_taxi.html">index_h3_taxi.html</a>.</p>
+  <ul>
+    <li><a href="Contagion_SIR.html">Contagion_SIR.html</a> — contagion SIR visualization</li>
+    <li><a href="CP-Dashboard.html">CP-Dashboard.html</a></li>
+    <li><a href="chart-testing.html">chart-testing.html</a></li>
+    <li><a href="chord_diagram.html">chord_diagram.html</a></li>
+    <li><a href="dashboard.html">dashboard.html</a></li>
+    <li><a href="file.html">file.html</a></li>
+    <li><a href="image_slider.html">image_slider.html</a></li>
+    <li><a href="index_h3_taxi.html">index_h3_taxi.html</a> — preserved original index (map)</li>
+    <li><a href="kepler.gl.html">kepler.gl.html</a></li>
+    <li><a href="my_keplergl_map.html">my_keplergl_map.html</a></li>
+    <li><a href="plotly.html">plotly.html</a></li>
+    <li><a href="rabona-analysis.html">rabona-analysis.html</a> — (consider removing if outdated)</li>
+    <li><a href="test.html">test.html</a></li>
+    <li><a href="Training.html">Training.html</a></li>
+    <li><a href="ulteig.html">ulteig.html</a></li>
+  </ul>
+
+  <p>Notes:</p>
+  <ul>
+    <li>The <strong>rabona</strong> artifacts include <code>rabona-analysis.html</code> — tell me which rabona files to delete and I'll remove them.</li>
+    <li>Later I can: copy the preserved <code>index_h3_taxi.html</code> into a dedicated H3 taxi pickups page and add H3 code (see the article you linked).</li>
+  </ul>
 </body>
-<script>    
-    
-            var map_f30378b111cf47e087ba38d2dd44c93c = L.map(
-                "map_f30378b111cf47e087ba38d2dd44c93c",
-                {
-                    center: [40.718728, -73.943802],
-                    crs: L.CRS.EPSG3857,
-                    zoom: 12,
-                    zoomControl: true,
-                    preferCanvas: false,
-                }
-            );
-
-            
-
-        
-    
-            var tile_layer_c460b29e362d4e6294b06b57a471fa4b = L.tileLayer(
-                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
-                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_f30378b111cf47e087ba38d2dd44c93c);
-        
-    
-        function geo_json_8a90ba14a71548f99d17d14929ef6ab1_styler(feature) {
-            switch(feature.id) {
-                case "892a1005e53ffff": case "892a100880fffff": case "892a1008877ffff": case "892a1008b77ffff": case "892a1008b8bffff": case "892a1008c67ffff": case "892a1008c77ffff": case "892a1008c87ffff": case "892a1008ca7ffff": case "892a1008cbbffff": case "892a1008d03ffff": case "892a1008d13ffff": case "892a1008dafffff": case "892a100a16fffff": case "892a100a177ffff": case "892a100aa23ffff": case "892a100aa27ffff": case "892a100aa37ffff": case "892a100aa67ffff": case "892a100aa83ffff": case "892a100ab43ffff": case "892a100ab4fffff": case "892a100ab53ffff": case "892a100ab57ffff": case "892a100ae0fffff": case "892a100ae63ffff": case "892a100ae67ffff": case "892a100ae73ffff": case "892a100c093ffff": case "892a100c44bffff": case "892a100c46fffff": case "892a100c5afffff": case "892a100c607ffff": case "892a100c60fffff": case "892a100c613ffff": case "892a100c61bffff": case "892a100c64fffff": case "892a100c67bffff": case "892a100c687ffff": case "892a100c68bffff": case "892a100c6b3ffff": case "892a100c6c7ffff": case "892a100c6d3ffff": case "892a100d023ffff": case "892a100d027ffff": case "892a100d08bffff": case "892a100d08fffff": case "892a100d097ffff": case "892a100d0bbffff": case "892a100d10bffff": case "892a100d167ffff": case "892a100d30bffff": case "892a100d397ffff": case "892a100d3a3ffff": case "892a100d42bffff": case "892a100d433ffff": case "892a100d437ffff": case "892a100d4afffff": case "892a100d4b7ffff": case "892a100d51bffff": case "892a100d54bffff": case "892a100d55bffff": case "892a100d58fffff": case "892a100d5d7ffff": case "892a100d5dbffff": case "892a100d86fffff": case "892a100d897ffff": case "892a100d89bffff": case "892a100da23ffff": case "892a100da4bffff": case "892a100da57ffff": case "892a100da6bffff": case "892a100da87ffff": case "892a100da8bffff": case "892a100daabffff": case "892a100dab7ffff": case "892a100dad7ffff": case "892a100dadbffff": case "892a100db1bffff": case "892a100db43ffff": case "892a100db5bffff": case "892a100db67ffff": case "892a100db9bffff": case "892a100dc0fffff": case "892a100dc2bffff": case "892a100dc4fffff": case "892a100dc67ffff": case "892a100dc6fffff": case "892a100dc73ffff": case "892a100de13ffff": case "892a100de17ffff": case "892a100de2fffff": case "892a100eb83ffff": case "892a100f067ffff": case "892a100f123ffff": case "892a100f137ffff": case "892a100f153ffff": case "892a100f167ffff": case "892a100f1cfffff": case "892a100f233ffff": case "892a100f237ffff": case "892a100f30bffff": case "892a100f32bffff": case "892a100f337ffff": case "892a100f33bffff": case "892a100f343ffff": case "892a100f36fffff": case "892a100f377ffff": case "892a100f37bffff": case "892a100f38bffff": case "892a100f393ffff": case "892a100f3c7ffff": case "892a100f3cbffff": case "892a100f3d3ffff": case "892a100f3dbffff": case "892a103b003ffff": case "892a103b007ffff": case "892a103b03bffff": case "892a103b057ffff": case "892a103b06bffff": case "892a103b2b3ffff": case "892a103b2b7ffff": case "892a103b397ffff": case "892a103b617ffff": case "892a1071e6bffff": case "892a107250fffff": case "892a1072567ffff": case "892a1072903ffff": case "892a1072913ffff": case "892a107292bffff": case "892a1072937ffff": case "892a10729d7ffff": case "892a1072c2fffff": case "892a1072c43ffff": case "892a1072d3bffff": case "892a1072d5bffff": case "892a1072d6fffff": case "892a107740bffff": case "892a1077457ffff": case "892a1077473ffff": case "892a1077483ffff": case "892a1077493ffff": case "892a107749bffff": case "892a1077583ffff": 
-                    return {"color": "black", "fillColor": "#018100", "fillOpacity": 0.7, "weight": 1};
+</html>
                 case "892a1008807ffff": 
                     return {"color": "black", "fillColor": "#6db700", "fillOpacity": 0.7, "weight": 1};
                 case "892a1008817ffff": 
