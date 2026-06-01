@@ -58,6 +58,7 @@
       border:1px solid var(--border);
       transition:all 0.2s ease;
       position:relative;
+      cursor:pointer;
     }
     .card:hover{
       transform:translateY(-4px);
@@ -231,5 +232,44 @@
       </p>
     </footer>
   </div>
+
+  <script>
+    // Make each card clickable: open the first link inside it.
+    (function () {
+      const cards = document.querySelectorAll('.card');
+      for (const card of cards) {
+        const primaryLink = card.querySelector('a[href]');
+        if (!primaryLink) continue;
+
+        card.tabIndex = 0;
+        card.setAttribute('role', 'link');
+        card.setAttribute('aria-label', (card.querySelector('h3')?.textContent || 'Open link').trim());
+
+        const openPrimary = () => {
+          const href = primaryLink.getAttribute('href');
+          if (!href) return;
+          const target = primaryLink.getAttribute('target');
+          if (target === '_blank') {
+            window.open(href, '_blank', 'noopener');
+          } else {
+            window.location.href = href;
+          }
+        };
+
+        card.addEventListener('click', (e) => {
+          // Don't interfere with normal anchor clicks.
+          if (e.target && e.target.closest && e.target.closest('a')) return;
+          openPrimary();
+        });
+
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openPrimary();
+          }
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
