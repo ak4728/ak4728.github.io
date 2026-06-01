@@ -13,9 +13,11 @@ External visualization tools:
 
 - Corridor Travel Time Analyzer (TransModeler VRC): https://ak4728.github.io/TransModeler-VRC-Visualization/
 - Traffic Signal Release Function Visualizer: https://ak4728.github.io/Traffic-Visualization-Tools/
+- 72nd Avenue Corridor Study Map: https://ak4728.github.io/Traffic-Visualization-Tools/72nd_corridor_map.html
 - Santa Fe O-D Matrix: https://ak4728.github.io/Traffic-Visualization-Tools/SantaFeOD.html
 - PENA Boulevard Travel Times: https://ak4728.github.io/Traffic-Visualization-Tools/PenaViz.html
 - Conference Seating Simulation: https://ak4728.github.io/Traffic-Visualization-Tools/confSeating.html
+- Copilot Awareness Survey: https://ak4728.github.io/Traffic-Visualization-Tools/survey.html
 - Eaton Fire Timeline: https://ak4728.github.io/Traffic-Visualization-Tools/Eaton%20Fire.html
 - GitHub repo: https://github.com/ak4728/Traffic-Visualization-Tools
 
