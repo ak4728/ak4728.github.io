@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobility Probe — AI Signal Performance Monitor (Prototype)</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif; background:#0a1730; color:#e6edf6; padding:18px; }
+  .wrap { max-width:1480px; margin:0 auto; }
+  /* Michael Baker International brand lockup */
+  .brandbar { display:flex; align-items:center; gap:0; margin-bottom:18px; }
+  .mb-logo { background:#14294d; padding:14px 16px; display:inline-flex; flex-direction:column; align-items:stretch; line-height:1; }
+  .mb-name { background:#fff; color:#14294d; font-weight:800; font-size:22px; letter-spacing:.2px; padding:6px 12px; text-align:center; }
+  .mb-intl { color:#fff; font-size:10px; letter-spacing:7px; font-weight:600; margin-top:8px; text-align:center; text-indent:7px; }
+  .brandbar .product { margin-left:18px; color:#9fb0c7; font-size:13px; }
+  .brandbar .product b { color:#eaf1fa; }
+  header { display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:6px; }
+  h1 { font-size:22px; color:#f4f8fc; letter-spacing:.2px; }
+  .tag { font-size:12px; background:#2f8ed1; color:#fff; padding:3px 9px; border-radius:999px; font-weight:700; letter-spacing:.5px; }
+  .sub { color:#94a3b8; font-size:13px; margin-bottom:16px; }
+  .card { background:#122845; border:1px solid #284869; border-radius:10px; padding:16px; margin-bottom:16px; }
+  .grid-controls { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin-bottom:14px; }
+  .cg label { display:block; font-size:11px; text-transform:uppercase; letter-spacing:.4px; color:#94a3b8; margin-bottom:6px; font-weight:600; }
+  .cg .val { color:#2f8ed1; font-weight:700; }
+  .cg input[type=range]{ width:100%; accent-color:#2f8ed1; }
+  .btnrow { display:flex; gap:10px; align-items:center; margin-bottom:4px; flex-wrap:wrap; }
+  button { padding:10px 18px; font-size:14px; font-weight:600; border:none; border-radius:7px; cursor:pointer; transition:.15s; }
+  .btn-play{ background:#16a34a; color:#fff; } .btn-play:hover{ background:#15803d; }
+  .btn-reset{ background:#475569; color:#fff; } .btn-reset:hover{ background:#284869; }
+  .clock { margin-left:auto; font-size:13px; color:#94a3b8; }
+  .clock b { color:#f8fafc; font-size:18px; }
+  canvas { display:block; width:100%; border-radius:8px; background:#0c1d3a; }
+  .legend { font-size:11px; color:#94a3b8; margin-top:8px; display:flex; gap:16px; flex-wrap:wrap; }
+  .dot{ display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px; vertical-align:middle; }
+  .metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; }
+  .metric { background:#0c1d3a; border:1px solid #284869; border-left:3px solid #2f8ed1; border-radius:8px; padding:12px; }
+  .metric .k { font-size:11px; color:#94a3b8; text-transform:uppercase; letter-spacing:.4px; }
+  .metric .v { font-size:26px; font-weight:800; color:#f8fafc; margin-top:4px; }
+  .metric .v small { font-size:13px; color:#64748b; font-weight:600; }
+  .metric .probe { font-size:11px; margin-top:5px; color:#a78bfa; }
+  .metric.warn { border-left-color:#f59e0b; } .metric.bad { border-left-color:#ef4444; } .metric.good { border-left-color:#22c55e; }
+  .two { display:grid; grid-template-columns:1.35fr 1fr; gap:16px; }
+  .panel-title { font-size:14px; font-weight:700; color:#f8fafc; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+  .ai .rec { background:#0c1d3a; border:1px solid #284869; border-radius:8px; padding:12px; margin-bottom:10px; font-size:13px; line-height:1.5; }
+  .ai .rec.action { border-color:#7c3aed; }
+  .ai .sev { font-size:10px; font-weight:700; text-transform:uppercase; padding:2px 7px; border-radius:999px; margin-right:6px; }
+  .sev-ok{ background:#14532d; color:#86efac; } .sev-warn{ background:#78350f; color:#fcd34d; } .sev-bad{ background:#7f1d1d; color:#fca5a5; }
+  .ai code{ background:#06122a; padding:1px 5px; border-radius:4px; color:#7dd3fc; }
+  .btn-apply{ background:#7c3aed; color:#fff; padding:7px 14px; font-size:13px; margin-top:6px; }
+  .btn-apply:hover{ background:#6d28d9; }
+  .foot{ color:#64748b; font-size:11px; margin-top:6px; line-height:1.6; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th,td { text-align:left; padding:8px 10px; border-bottom:1px solid #284869; }
+  th { color:#94a3b8; font-size:11px; text-transform:uppercase; letter-spacing:.4px; }
+  .los { display:inline-block; width:24px; text-align:center; border-radius:4px; font-weight:800; padding:2px 0; }
+  .los.good{ background:#14532d; color:#86efac; } .los.warn{ background:#78350f; color:#fcd34d; } .los.bad{ background:#7f1d1d; color:#fca5a5; }
+  .help{ display:inline-flex; width:17px; height:17px; border-radius:50%; background:#284869; color:#cbd5e1; font-size:11px; align-items:center; justify-content:center; cursor:help; position:relative; font-weight:700; }
+  .help .tip{ display:none; position:absolute; z-index:30; left:24px; top:-6px; width:340px; background:#06122a; border:1px solid #475569; padding:11px 13px; border-radius:8px; font-size:12px; line-height:1.55; color:#cbd5e1; font-weight:400; text-transform:none; letter-spacing:0; box-shadow:0 8px 24px rgba(0,0,0,.5); }
+  .help:hover .tip{ display:block; }
+  .cmp-grid{ display:grid; grid-template-columns:1.2fr 1fr 1fr 1fr; gap:0; font-size:13px; }
+  .cmp-grid div{ padding:8px 10px; border-bottom:1px solid #284869; }
+  .cmp-grid .h{ color:#94a3b8; font-size:11px; text-transform:uppercase; letter-spacing:.4px; font-weight:600; }
+  .up{ color:#86efac; } .down{ color:#fca5a5; }
+  @media(max-width:1000px){ .two{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brandbar">
+    <div class="mb-logo"><span class="mb-name">Michael Baker</span><span class="mb-intl">INTERNATIONAL</span></div>
+    <div class="product"><b>Mobility Probe</b> &nbsp;·&nbsp; AI-Driven Signal Performance Monitoring</div>
+  </div>
+  <header>
+    <h1>Mobility Probe</h1>
+    <span class="tag">PROTOTYPE</span>
+    <span style="color:#9fb0c7;font-size:13px;">AI-Driven Signal Performance Monitoring — from probe data, no field hardware</span>
+  </header>
+  <div class="sub">The simulation is the <b style="color:#cbd5e1">real-world corridor</b> (two full intersections, main + cross streets, yellow phasing). Mobility Probe sees only the <span style="color:#a78bfa">probe vehicles</span> and reconstructs delay, LOS, split failures and arrivals-on-green from that sample.</div>
+
+  <div class="card">
+    <div class="grid-controls">
+      <div class="cg"><label>Main demand <span class="val" id="dDemand">900</span> veh/h</label><input type="range" id="demand" min="200" max="1800" step="50" value="900"></div>
+      <div class="cg"><label>Side-st demand <span class="val" id="dSide">350</span> veh/h/appr</label><input type="range" id="sidedem" min="0" max="900" step="25" value="350"></div>
+      <div class="cg"><label>Free-flow speed <span class="val" id="dSpeed">30</span> mph</label><input type="range" id="speed" min="20" max="45" step="1" value="30"></div>
+      <div class="cg"><label>Cycle length <span class="val" id="dCycle">80</span> s</label><input type="range" id="cycle" min="50" max="140" step="5" value="80"></div>
+      <div class="cg"><label>Main green <span class="val" id="dGreen">36</span> s</label><input type="range" id="green" min="12" max="100" step="1" value="36"></div>
+      <div class="cg"><label>Yellow <span class="val" id="dYellow">3</span> s <span style="color:#64748b;text-transform:none;letter-spacing:0">+1s all-red</span></label><input type="range" id="yellow" min="2.5" max="6" step="0.5" value="3"></div>
+      <div class="cg"><label>Signal-2 offset <span class="val" id="dOffset">0</span> s</label><input type="range" id="offset" min="0" max="140" step="1" value="0"></div>
+      <div class="cg"><label>Probe penetration <span class="val" id="dPen" style="color:#a78bfa">8</span> %</label><input type="range" id="pen" min="2" max="100" step="1" value="8"></div>
+      <div class="cg"><label>Sliding window <span class="val" id="dWin">10</span> cycles</label><input type="range" id="win" min="3" max="30" step="1" value="10"></div>
+    </div>
+    <div class="btnrow">
+      <button class="btn-play" id="play">▶ Play</button>
+      <button class="btn-reset" id="reset">↻ Reset</button>
+      <button class="btn-reset" id="warm" title="Skip ahead so metrics populate">⏩ Warm-up</button>
+      <span class="clock">Sim time <b id="simTime">0s</b> &nbsp;|&nbsp; cycle <b id="cycNo">0</b> &nbsp;|&nbsp; side green <b id="sideG">–</b></span>
+    </div>
+    <div style="margin-top:14px">
+      <canvas id="corridor" height="340"></canvas>
+      <div class="legend">
+        <span><span class="dot" style="background:#22c55e"></span>green</span>
+        <span><span class="dot" style="background:#eab308"></span>yellow</span>
+        <span><span class="dot" style="background:#ef4444"></span>red</span>
+        <span><span class="dot" style="background:#a78bfa"></span>probe vehicle</span>
+        <span><span class="dot" style="background:#64748b"></span>non-probe</span>
+        <span><span class="dot" style="background:#fbbf24"></span>detector @ monitored signal</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="panel-title">Monitored approach — Signal 2 main (probe-reconstructed vs ground truth)</div>
+    <div class="metrics" id="metrics">
+      <div class="metric" id="m-aog"><div class="k">Arrivals on Green</div><div class="v">–</div><div class="probe">probe est: –</div></div>
+      <div class="metric" id="m-pr"><div class="k">Platoon Ratio</div><div class="v">–</div><div class="probe">progression quality</div></div>
+      <div class="metric" id="m-sf"><div class="k">Split Failures</div><div class="v">–</div><div class="probe">queue not cleared in green</div></div>
+      <div class="metric" id="m-delay"><div class="k">Approach Delay</div><div class="v">–</div><div class="probe">probe est: –</div></div>
+      <div class="metric" id="m-queue"><div class="k">Max Queue</div><div class="v">–</div><div class="probe">veh, monitored approach</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="cmpCard" style="display:none;">
+    <div class="panel-title">⏮️ Before / After — timing change applied <span style="font-weight:400;color:#94a3b8;font-size:12px;" id="cmpNote"></span></div>
+    <div class="cmp-grid" id="cmpGrid"></div>
+  </div>
+
+  <div class="card">
+    <div class="panel-title">🚦 Intersection LOS &amp; Control Delay <span class="help">?<span class="tip">HCM signalized control delay → Level of Service. A ≤10s, B ≤20s, C ≤35s, D ≤55s, E ≤80s, F &gt;80s per vehicle. Delay here is measured from the simulated trajectories over the sliding window. Side-street LOS degrades as you give more green to the main street — the classic coordination trade-off.</span></span></div>
+    <table id="losTable">
+      <thead><tr><th>Intersection</th><th>Approach</th><th>Avg delay (s/veh)</th><th>LOS</th><th>Sample (veh)</th></tr></thead>
+      <tbody id="losBody"><tr><td colspan="5" style="color:#64748b">Run the simulation to populate…</td></tr></tbody>
+    </table>
+  </div>
+
+  <div class="two">
+    <div class="card">
+      <div class="panel-title">📊 Purdue Coordination Diagram
+        <span class="help">?<span class="tip"><b>The standard ATSPM coordination chart.</b><br>
+          • <b>X-axis:</b> arrivals over time (the sliding window of recent cycles).<br>
+          • <b>Y-axis:</b> where in the signal cycle each vehicle reached the upstream detector (0 → cycle length).<br>
+          • <b>Green band:</b> the green phase of the monitored signal.<br>
+          • <b>Dots in the band</b> = arrivals on green (good progression). Dots above/below = arriving on red → delay.<br>
+          • <b>Purple-ringed dots</b> = vehicles Mobility Probe actually detected (the probe sample).<br>
+          Good coordination packs the platoon inside the green band. Tuning the offset slides the dots relative to the band.</span></span>
+        <span style="font-weight:400;color:#94a3b8;font-size:12px;margin-left:auto;">last <b id="pcdWinLbl">10</b> cycles</span>
+      </div>
+      <canvas id="pcd" height="300"></canvas>
+      <div class="legend">
+        <span><span class="dot" style="background:#22c55e"></span>arrived on green</span>
+        <span><span class="dot" style="background:#ef4444"></span>arrived on red</span>
+        <span><span class="dot" style="background:rgba(34,197,94,.18);border:1px solid #22c55e"></span>green window</span>
+        <span style="color:#a78bfa">ringed = probe-detected</span>
+      </div>
+    </div>
+
+    <div class="card ai">
+      <div class="panel-title">🤖 AI Diagnostics &amp; Recommendations</div>
+      <div id="aiBody"><div class="rec">Press <b>Play</b> (or Warm-up) and let a few cycles run.</div></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    Corridor = ground truth. Mobility Probe ingests only probe trajectories to reconstruct delay, LOS, split failures and arrivals-on-green — no loops, cameras, or radar. The AI panel diagnoses progression, computes the offset that maximizes arrivals-on-green, and lets you Apply it; the Before/After card then quantifies the gain. Built on the SigRelease microsimulation engine. LOS table reflects ground-truth corridor performance over the sliding window.
+  </div>
+</div>
+
+<script>
+"use strict";
+// ===== world geometry (meters) =====
+var L=760, S1=250, S2=510, DET=415; // intersections centered: 33% & 67%, symmetric lead-in
+var HW=14;                         // half-width of an intersection box (m); stop line sits at Sx-HW
+var AR=1;                          // all-red clearance after every yellow (s) — fixed
+var SIDE_LEN=68, SIDE_EXIT=210;    // approach stop bar at 68m; exit leg continues to 210m so cars cross the box and travel a full far leg before leaving frame
+var SPAWN_GAP=18;                  // clear distance needed at the entry before spawning (m)
+var IDM={ a:1.6, b:2.2, s0:2.5, T:1.3 };
+function mph(m){ return m*0.44704; }
+// vehicle length ~ Normal, clamped to a minimum (cars≈4.5m, occasional longer vehicles/trucks)
+function gauss(m,s){ var u=1-Math.random(), v=Math.random(); return m+s*Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); }
+function sampleLen(){ var x=gauss(4.8,1.8); return Math.max(3.6, Math.min(13, x)); }
+
+// ===== params =====
+var P={ demand:900, side:350, v0:mph(30), cycle:80, green:36, yellow:3, offset:0, pen:0.08, windowCycles:10 };
+function gSide(){ return Math.max(4, P.cycle - P.green - 2*P.yellow - 2*AR); }
+
+// ===== state =====
+var running=false, t=0, lastTs=null, timeScale=5;
+// main corridor — two directions
+var mainEB=[], mainWB=[], nxEB=0, nxWB=0;       // EB: x 0→L ; WB: x L→0
+var dEB_S1=[], dEB_S2=[], dWB_S1=[], dWB_S2=[]; // approach delays {t,delay,probe}
+// intersections — each has SB (from top) and NB (from bottom) side approaches
+var inter=[ {x:S1,off:0,sb:[],nb:[],nxSB:0,nxNB:0,dSB:[],dNB:[]},
+            {x:S2,off:0,sb:[],nb:[],nxSB:0,nxNB:0,dSB:[],dNB:[]} ];
+var records=[];            // EB @ S2 detector crossings {t,phase,onGreen,probe}
+var splitEvents=[];        // EB @ S2 {t,fail}
+var maxQueue=0, prevS2Main='green';
+// before/after
+var beforeSnap=null, applyTime=0;
+
+// ===== DOM =====
+function $(id){ return document.getElementById(id); }
+var corridor=$('corridor'), cctx=corridor.getContext('2d');
+var pcd=$('pcd'), pctx=pcd.getContext('2d');
+
+function bind(id,disp,fn){ var el=$(id); el.addEventListener('input',function(e){ fn(parseFloat(e.target.value)); $(disp).textContent=e.target.value; }); }
+bind('demand','dDemand',function(v){ P.demand=v; });
+bind('sidedem','dSide',function(v){ P.side=v; });
+bind('speed','dSpeed',function(v){ P.v0=mph(v); });
+bind('cycle','dCycle',function(v){ P.cycle=v; clampGreen(); });
+bind('green','dGreen',function(v){ P.green=v; });
+bind('yellow','dYellow',function(v){ P.yellow=v; clampGreen(); });
+bind('offset','dOffset',function(v){ P.offset=v; });
+bind('pen','dPen',function(v){ P.pen=v/100; });
+bind('win','dWin',function(v){ P.windowCycles=v; $('pcdWinLbl').textContent=v; });
+function clampGreen(){ var mx=P.cycle-2*P.yellow-2*AR-6; $('green').max=mx; if(P.green>mx){ P.green=mx; $('green').value=mx; $('dGreen').textContent=mx; } $('offset').max=P.cycle; }
+
+$('play').addEventListener('click',function(){
+  running=!running;
+  this.textContent=running?'⏸ Pause':'▶ Play';
+  this.style.background=running?'#dc2626':'#16a34a';
+  if(running){ lastTs=null; requestAnimationFrame(loop); }
+});
+$('reset').addEventListener('click', reset);
+$('warm').addEventListener('click', function(){ for(var k=0;k<1200;k++) step(0.1); draw(); updateUI(); });
+
+function reset(){
+  running=false; $('play').textContent='▶ Play'; $('play').style.background='#16a34a';
+  t=0; lastTs=null; maxQueue=0; prevS2Main='green';
+  mainEB=[]; mainWB=[]; nxEB=0; nxWB=0; dEB_S1=[]; dEB_S2=[]; dWB_S1=[]; dWB_S2=[];
+  inter.forEach(function(I){ I.sb=[]; I.nb=[]; I.nxSB=0; I.nxNB=0; I.dSB=[]; I.dNB=[]; });
+  records=[]; splitEvents=[];
+  beforeSnap=null; pendingBO=null; lastAIHtml=''; $('cmpCard').style.display='none';
+  clampGreen(); draw(); updateUI();
+  $('aiBody').innerHTML='<div class="rec">Press <b>Play</b> (or Warm-up) and let a few cycles run.</div>';
+}
+
+// ===== signal phasing (returns 'green'|'yellow'|'red'); layout: gMain, Y, AR, gSide, Y, AR =====
+function mainState(time,off){ var tc=((time+off)%P.cycle+P.cycle)%P.cycle; if(tc<P.green) return 'green'; if(tc<P.green+P.yellow) return 'yellow'; return 'red'; }
+function sideState(time,off){ var tc=((time+off)%P.cycle+P.cycle)%P.cycle; var s=P.green+P.yellow+AR; if(tc<s) return 'red'; if(tc<s+gSide()) return 'green'; if(tc<s+gSide()+P.yellow) return 'yellow'; return 'red'; }
+function mustStop(state,dist,v){ if(state==='green') return false; if(state==='red') return true; return dist > v*P.yellow; } // yellow: stop only if can't clear
+// single source of truth for each controller's offset (Signal 1 = 0, Signal 2 = P.offset).
+// Used by BOTH the simulation and the drawn signal faces so they can never disagree.
+function offOf(I){ return I.x===S2 ? P.offset : 0; }
+
+// ===== IDM accel given gap & lead speed =====
+function idmAccel(v,gap,leadV){
+  if(gap===Infinity) return IDM.a*(1-Math.pow(v/P.v0,4));
+  var dv=v-leadV;
+  var sStar=IDM.s0+Math.max(0, v*IDM.T + v*dv/(2*Math.sqrt(IDM.a*IDM.b)));
+  var s=Math.max(0.5,gap);
+  var a=IDM.a*(1-Math.pow(v/P.v0,4)-Math.pow(sStar/s,2));
+  return Math.max(-6,Math.min(IDM.a,a));
+}
+
+// ===== simulation step =====
+function spawnMain(list, dir, nextT){
+  var rate=P.demand/3600; if(rate<=0) return nextT;
+  var entry = dir>0?0:L;
+  while(t>=nextT){
+    var clear=true; for(var i=0;i<list.length;i++){ var d=dir>0?list[i].x:(L-list[i].x); if(d<SPAWN_GAP){ clear=false; break; } }
+    if(clear) list.push({ x:entry, v:P.v0*0.6, len:sampleLen(), probe:Math.random()<P.pen, seg:0, pS1:false, pS2:false, recDet:false });
+    nextT += -Math.log(1-Math.random())/rate;
+    if(nextT<t-0.001 && !clear) nextT=t+0.3;
+  }
+  return nextT;
+}
+function spawnSide(list, nextT){
+  var rate=P.side/3600; if(rate<=0) return nextT;
+  while(t>=nextT){
+    var clear=true; for(var i=0;i<list.length;i++){ if(list[i].p<SPAWN_GAP){ clear=false; break; } }
+    if(clear) list.push({ p:0, v:P.v0*0.6, len:sampleLen(), probe:Math.random()<P.pen, seg:0, passed:false });
+    nextT += -Math.log(1-Math.random())/rate;
+    if(nextT<t-0.001 && !clear) nextT=t+0.3;
+  }
+  return nextT;
+}
+// main stream: dir=+1 EB (x 0→L), dir=-1 WB (x L→0). Returns EB queue at S2.
+function updMain(list, dir, dArr1, dArr2, dt){
+  list.sort(dir>0 ? function(a,b){return b.x-a.x;} : function(a,b){return a.x-b.x;});
+  var s1=mainState(t,0), s2=mainState(t,P.offset), q2=0;
+  for(var i=0;i<list.length;i++){
+    var me=list[i], x0=me.x, gap=Infinity, ov=0;
+    if(i>0){ var ld=list[i-1]; var lg=dir>0?(ld.x-ld.len)-me.x:me.x-(ld.x+ld.len); if(lg<gap){ gap=lg; ov=ld.v; } }
+    var bars=[];
+    var chk=function(Sx,st){ var bar=dir>0?Sx-HW:Sx+HW; var dist=dir>0?bar-me.x:me.x-bar; var ahead=dir>0?me.x<=bar:me.x>=bar;
+      if(ahead && mustStop(st,dist,me.v)){ if(dist<gap){ gap=dist; ov=0; } bars.push(bar); } };
+    chk(S1,s1); chk(S2,s2);
+    var a=idmAccel(me.v,gap,ov);
+    me.v=Math.max(0,me.v+a*dt); me.x+=dir*me.v*dt;
+    for(var k=0;k<bars.length;k++){ var bar=bars[k]; if(dir>0){ if(x0<bar && me.x>bar){ me.x=bar; me.v=0; } } else { if(x0>bar && me.x<bar){ me.x=bar; me.v=0; } } }
+    if(me.v<0.6) me.seg+=dt;
+    if(dir>0){
+      if(me.x>(S2-HW)-90 && me.x<=S2-HW+2 && me.v<1.5) q2++;
+      if(!me.recDet && me.x>=DET){ me.recDet=true; var ph=((t+P.offset)%P.cycle+P.cycle)%P.cycle; records.push({t:t,phase:ph,onGreen:ph<P.green,probe:me.probe}); }
+      if(!me.pS1 && me.x>S1){ me.pS1=true; dArr1.push({t:t,delay:me.seg,probe:me.probe}); me.seg=0; }
+      if(!me.pS2 && me.x>S2){ me.pS2=true; dArr2.push({t:t,delay:me.seg,probe:me.probe}); me.seg=0; }
+    } else {
+      if(!me.pS2 && me.x<S2){ me.pS2=true; dArr2.push({t:t,delay:me.seg,probe:me.probe}); me.seg=0; }
+      if(!me.pS1 && me.x<S1){ me.pS1=true; dArr1.push({t:t,delay:me.seg,probe:me.probe}); me.seg=0; }
+    }
+  }
+  return q2;
+}
+// side stream: dir=+1 SB (from top), dir=-1 NB (from bottom). Both use coord p increasing toward the box.
+function updSide(I, list, dArr, dt){
+  list.sort(function(a,b){ return b.p-a.p; });
+  var st=sideState(t,offOf(I));
+  for(var i=0;i<list.length;i++){
+    var me=list[i], p0=me.p, gap=Infinity, ov=0;
+    if(i>0){ var ld=list[i-1]; var lg=(ld.p-ld.len)-me.p; if(lg<gap){ gap=lg; ov=ld.v; } }
+    var stopS=me.p<=SIDE_LEN && mustStop(st,SIDE_LEN-me.p,me.v);
+    if(stopS){ var g=SIDE_LEN-me.p; if(g<gap){ gap=g; ov=0; } }
+    var a=idmAccel(me.v,gap,ov);
+    me.v=Math.max(0,me.v+a*dt); me.p+=me.v*dt;
+    if(stopS && p0<SIDE_LEN && me.p>SIDE_LEN){ me.p=SIDE_LEN; me.v=0; }
+    if(me.v<0.6) me.seg+=dt;
+    if(!me.passed && me.p>SIDE_LEN){ me.passed=true; dArr.push({t:t,delay:me.seg,probe:me.probe}); me.seg=0; }
+  }
+}
+function step(dt){
+  t+=dt;
+  nxEB=spawnMain(mainEB,1,nxEB); nxWB=spawnMain(mainWB,-1,nxWB);
+  inter.forEach(function(I){ I.nxSB=spawnSide(I.sb,I.nxSB); I.nxNB=spawnSide(I.nb,I.nxNB); });
+
+  var q2=updMain(mainEB,1,dEB_S1,dEB_S2,dt);
+  updMain(mainWB,-1,dWB_S1,dWB_S2,dt);
+  if(q2>maxQueue) maxQueue=q2;
+  var s2main=mainState(t,P.offset);
+  if(prevS2Main==='green' && s2main==='yellow'){ splitEvents.push({t:t,fail:q2>0}); }
+  prevS2Main=s2main;
+
+  inter.forEach(function(I){ updSide(I,I.sb,I.dSB,dt); updSide(I,I.nb,I.dNB,dt); });
+
+  // cleanup
+  mainEB=mainEB.filter(function(v){ return v.x<=L; });
+  mainWB=mainWB.filter(function(v){ return v.x>=0; });
+  inter.forEach(function(I){ I.sb=I.sb.filter(function(v){return v.p<=SIDE_EXIT;}); I.nb=I.nb.filter(function(v){return v.p<=SIDE_EXIT;}); });
+  if(records.length>2000) records.splice(0,records.length-2000);
+}
+
+// ===== analytics (windowed) =====
+function winStart(){ return t - P.windowCycles*P.cycle; }
+function wf(arr){ var s=winStart(),o=[]; for(var i=arr.length-1;i>=0;i--){ if(arr[i].t<s) break; o.push(arr[i]); } return o; }
+function avg(arr){ if(!arr.length) return null; var s=0; for(var i=0;i<arr.length;i++) s+=arr[i].delay; return s/arr.length; }
+function aogOf(recs){ if(!recs.length) return null; var on=0; for(var i=0;i<recs.length;i++) if(recs[i].onGreen) on++; return on/recs.length; }
+function splitRate(){ var w=wf(splitEvents); if(!w.length) return null; var f=0; for(var i=0;i<w.length;i++) if(w[i].fail) f++; return f/w.length; }
+function los(d){ if(d==null) return ['–','']; if(d<=10)return['A','good']; if(d<=20)return['B','good']; if(d<=35)return['C','warn']; if(d<=55)return['D','warn']; if(d<=80)return['E','bad']; return['F','bad']; }
+
+function bestOffset(){
+  var recs=wf(records); if(recs.length<8) return null;
+  var arr=[]; for(var i=0;i<recs.length;i++){ arr.push(((recs[i].phase-P.offset)%P.cycle+P.cycle)%P.cycle); }
+  var best=-1,bo=0;
+  for(var o=0;o<P.cycle;o++){ var c=0; for(var j=0;j<arr.length;j++){ if(((arr[j]+o)%P.cycle)<P.green) c++; } if(c>best){ best=c; bo=o; } }
+  return { offset:bo, aog:best/arr.length };
+}
+
+// monitored-approach summary used for snapshots/compare
+function monitored(){
+  var recs=wf(records);
+  return { aog:aogOf(recs), delay:avg(wf(dEB_S2)), split:splitRate() };
+}
+
+// ===== rendering =====
+function fit(c){ var w=c.clientWidth; if(c.width!==w) c.width=w; return w; }
+function sigColor(st){ return st==='green'?'#22c55e':st==='yellow'?'#eab308':'#ef4444'; }
+
+function drawCorridor(){
+  var w=fit(corridor), h=corridor.height, sx=w/L, yC=h*0.5;
+  var hwPx=HW*sx;                                   // intersection half-width in px
+  var boxTop=yC-hwPx, boxBot=yC+hwPx;
+  var sideTop=boxTop-2, sideBot=boxBot+2;           // N/S stop bars (just outside the box)
+  var sideScale=Math.min(sx, (sideTop-6)/SIDE_LEN); // match E/W scale when it fits
+  var yEB=yC+hwPx*0.5, yWB=yC-hwPx*0.5;             // E/W lane centers
+  var laneOff=hwPx*0.5, vH=Math.max(6,hwPx*0.42);   // side lane offset & vehicle thickness
+  cctx.clearRect(0,0,w,h);
+  // cross-street pavement
+  inter.forEach(function(I){ var x=I.x*sx; cctx.fillStyle='#16243f'; cctx.fillRect(x-hwPx,0,2*hwPx,h); });
+  // main pavement
+  cctx.fillStyle='#1b3055'; cctx.fillRect(0,boxTop,w,2*hwPx);
+  // main center double-yellow (separates EB from WB)
+  cctx.strokeStyle='#caa21a'; cctx.lineWidth=1.4;
+  cctx.beginPath(); cctx.moveTo(0,yC-2); cctx.lineTo(w,yC-2); cctx.moveTo(0,yC+2); cctx.lineTo(w,yC+2); cctx.stroke();
+  // side center double-yellow (above & below the main road only)
+  inter.forEach(function(I){ var x=I.x*sx;
+    cctx.beginPath(); cctx.moveTo(x-2,0); cctx.lineTo(x-2,boxTop); cctx.moveTo(x+2,0); cctx.lineTo(x+2,boxTop);
+    cctx.moveTo(x-2,boxBot); cctx.lineTo(x-2,h); cctx.moveTo(x+2,boxBot); cctx.lineTo(x+2,h); cctx.stroke(); });
+  // EB detector (monitored direction only)
+  cctx.strokeStyle='#fbbf24'; cctx.lineWidth=2; cctx.beginPath(); cctx.moveTo(DET*sx,yC+1); cctx.lineTo(DET*sx,boxBot); cctx.stroke();
+  // intersection stop bars + signal heads
+  inter.forEach(function(I,idx){
+    var x=I.x*sx, ms=mainState(t,offOf(I)), ss=sideState(t,offOf(I));
+    cctx.lineWidth=2; cctx.strokeStyle='#cbd5e1';
+    // E/W stop bars (EB on near/left edge in its lane; WB on far/right edge in its lane)
+    cctx.beginPath(); cctx.moveTo(x-hwPx,yC); cctx.lineTo(x-hwPx,boxBot); cctx.stroke();      // EB
+    cctx.beginPath(); cctx.moveTo(x+hwPx,boxTop); cctx.lineTo(x+hwPx,yC); cctx.stroke();        // WB
+    // N/S stop bars (SB top edge in its lane; NB bottom edge)
+    cctx.beginPath(); cctx.moveTo(x,sideTop); cctx.lineTo(x+hwPx,sideTop); cctx.stroke();       // SB
+    cctx.beginPath(); cctx.moveTo(x-hwPx,sideBot); cctx.lineTo(x,sideBot); cctx.stroke();       // NB
+    // signal heads (one per movement, colored by indication)
+    function head(hx,hy,st){ cctx.fillStyle=sigColor(st); cctx.beginPath(); cctx.arc(hx,hy,5.5,0,7); cctx.fill(); if(st==='green'){ cctx.shadowColor='#22c55e'; cctx.shadowBlur=9; cctx.fill(); cctx.shadowBlur=0; } }
+    head(x-hwPx-7, yEB, ms);   // EB head
+    head(x+hwPx+7, yWB, ms);   // WB head
+    head(x+hwPx+7, sideTop-7, ss); // SB head
+    head(x-hwPx-7, sideBot+7, ss); // NB head
+    cctx.fillStyle='#9fb0c7'; cctx.font='10px sans-serif'; cctx.textAlign='center';
+    cctx.fillText(idx===1?'Signal 2 — MONITORED':'Signal 1', x, h-5);
+  });
+  // ---- vehicles ----
+  function car(px,py,ln,thick,probe,horiz){
+    cctx.fillStyle=probe?'#a78bfa':'#9aa7bb';
+    if(horiz) cctx.fillRect(px,py-thick/2,ln,thick); else cctx.fillRect(px-thick/2,py,thick,ln);
+    if(probe){ cctx.strokeStyle='#c4b5fd'; cctx.lineWidth=1; if(horiz) cctx.strokeRect(px-0.5,py-thick/2-0.5,ln+1,thick+1); else cctx.strokeRect(px-thick/2-0.5,py-0.5,thick+1,ln+1); }
+  }
+  var vTh=Math.max(6,hwPx*0.42);
+  for(var i=0;i<mainEB.length;i++){ var v=mainEB[i], ln=v.len*sx; car(v.x*sx-ln,yEB,ln,vTh,v.probe,true); }      // EB: body trails left
+  for(var i=0;i<mainWB.length;i++){ var v=mainWB[i], ln=v.len*sx; car(v.x*sx,yWB,ln,vTh,v.probe,true); }          // WB: body trails right
+  inter.forEach(function(I){ var x=I.x*sx;
+    for(var i=0;i<I.sb.length;i++){ var v=I.sb[i], ln=v.len*sideScale, y=sideTop+(v.p-SIDE_LEN)*sideScale; car(x+laneOff,y-ln,ln,vTh,v.probe,false); } // SB body trails up
+    for(var i=0;i<I.nb.length;i++){ var v=I.nb[i], ln=v.len*sideScale, y=sideBot-(v.p-SIDE_LEN)*sideScale; car(x-laneOff,y,ln,vTh,v.probe,false); }     // NB body trails down
+  });
+}
+
+function drawPCD(){
+  var w=fit(pcd), h=pcd.height; var padL=44,padB=26,padT=10,padR=10;
+  var plotW=w-padL-padR, plotH=h-padT-padB;
+  pctx.clearRect(0,0,w,h); pctx.fillStyle='#0c1d3a'; pctx.fillRect(0,0,w,h);
+  var yG=padT+plotH*(1-P.green/P.cycle);
+  pctx.fillStyle='rgba(34,197,94,.16)'; pctx.fillRect(padL,yG,plotW,padT+plotH-yG);
+  pctx.strokeStyle='rgba(34,197,94,.5)'; pctx.lineWidth=1; pctx.strokeRect(padL,yG,plotW,padT+plotH-yG);
+  pctx.strokeStyle='#284869'; pctx.beginPath(); pctx.moveTo(padL,padT); pctx.lineTo(padL,padT+plotH); pctx.lineTo(padL+plotW,padT+plotH); pctx.stroke();
+  pctx.fillStyle='#64748b'; pctx.font='10px sans-serif'; pctx.textAlign='right';
+  pctx.fillText('0',padL-6,padT+plotH); pctx.fillText(P.cycle+'s',padL-6,padT+8);
+  pctx.save(); pctx.translate(12,padT+plotH/2); pctx.rotate(-Math.PI/2); pctx.textAlign='center'; pctx.fillText('time in cycle',0,0); pctx.restore();
+  pctx.textAlign='center'; pctx.fillText('arrivals over recent cycles  →',padL+plotW/2,h-6);
+  var recs=wf(records); var N=recs.length;
+  // recs from wf are newest-first; reverse for left->right time
+  for(var i=0;i<N;i++){
+    var r=recs[N-1-i];
+    var x=padL+(N<=1?plotW:(i/(N-1))*plotW);
+    var y=padT+plotH*(1-r.phase/P.cycle);
+    pctx.fillStyle=r.onGreen?'#22c55e':'#ef4444';
+    pctx.beginPath(); pctx.arc(x,y,r.probe?3.6:2.4,0,7); pctx.fill();
+    if(r.probe){ pctx.strokeStyle='#a78bfa'; pctx.lineWidth=1.4; pctx.beginPath(); pctx.arc(x,y,5.2,0,7); pctx.stroke(); }
+  }
+}
+function draw(){ drawCorridor(); drawPCD(); }
+
+// ===== UI =====
+function setMetric(id,cls,vHtml,probeHtml){ var el=$(id); el.className='metric'+(cls?' '+cls:''); el.querySelector('.v').innerHTML=vHtml; if(probeHtml!=null) el.querySelector('.probe').innerHTML=probeHtml; }
+function pct(x){ return x==null?'–':(x*100).toFixed(0)+'%'; }
+
+function updateUI(){
+  $('simTime').textContent=t.toFixed(0)+'s'; $('cycNo').textContent=Math.floor(t/P.cycle);
+  $('sideG').textContent=gSide().toFixed(0)+'s';
+
+  var recs=wf(records), recsP=recs.filter(function(r){return r.probe;});
+  var aogReal=aogOf(recs), aogProbe=aogOf(recsP);
+  var gRatio=P.green/P.cycle, platoon=aogReal==null?null:aogReal/gRatio;
+  var dReal=avg(wf(dEB_S2)), dProbe=avg(wf(dEB_S2).filter(function(r){return r.probe;}));
+  var sf=splitRate();
+
+  setMetric('m-aog', aogReal==null?'':(aogReal>=0.7?'good':aogReal>=0.45?'warn':'bad'), pct(aogReal), 'probe est: <b>'+pct(aogProbe)+'</b> (n='+recsP.length+')');
+  setMetric('m-pr', platoon==null?'':(platoon>=1.2?'good':platoon>=0.85?'warn':'bad'), platoon==null?'–':platoon.toFixed(2), 'progression quality');
+  setMetric('m-sf', sf==null?'':(sf<=0.05?'good':sf<=0.2?'warn':'bad'), sf==null?'–':(sf*100).toFixed(0)+'<small>% cycles</small>', 'queue not cleared in green');
+  setMetric('m-delay', dReal==null?'':(dReal<=15?'good':dReal<=35?'warn':'bad'), dReal==null?'–':dReal.toFixed(1)+'<small>s/veh</small>', 'probe est: <b>'+(dProbe==null?'–':dProbe.toFixed(1)+'s')+'</b>');
+  setMetric('m-queue', maxQueue>=12?'bad':maxQueue>=6?'warn':'', maxQueue+'<small>veh</small>', null);
+
+  renderLOS();
+  renderCompare();
+  renderAI(aogReal,platoon,sf,dReal);
+}
+
+function losRow(name,appr,arr){
+  var w=wf(arr), d=avg(w), lo=los(d);
+  return '<tr><td>'+name+'</td><td>'+appr+'</td><td>'+(d==null?'–':d.toFixed(1))+'</td><td><span class="los '+lo[1]+'">'+lo[0]+'</span></td><td>'+w.length+'</td></tr>';
+}
+function renderLOS(){
+  var html='';
+  html+=losRow('<b>Signal 1</b>','EB through',dEB_S1);
+  html+=losRow('','WB through',dWB_S1);
+  html+=losRow('','NB side',inter[0].dNB);
+  html+=losRow('','SB side',inter[0].dSB);
+  html+=losRow('<b>Signal 2</b>','EB through (monitored)',dEB_S2);
+  html+=losRow('','WB through',dWB_S2);
+  html+=losRow('','NB side',inter[1].dNB);
+  html+=losRow('','SB side',inter[1].dSB);
+  $('losBody').innerHTML=html;
+}
+
+function renderCompare(){
+  if(!beforeSnap){ return; }
+  $('cmpCard').style.display='block';
+  var after=monitored();
+  var cyclesAfter=((t-applyTime)/P.cycle);
+  $('cmpNote').textContent=' — '+cyclesAfter.toFixed(0)+' cycles since change'+(cyclesAfter<P.windowCycles?' (filling window…)':'');
+  function row(lbl,b,a,fmt,goodUp){
+    var bs=b==null?'–':fmt(b), as=a==null?'–':fmt(a);
+    var delta=''; if(b!=null&&a!=null){ var d=a-b; var improved=goodUp?d>0:d<0; var cls=improved?'up':'down'; var sign=d>0?'+':''; delta='<span class="'+cls+'">'+sign+fmt(d)+(improved?' ▲':' ▼')+'</span>'; }
+    return '<div class="h">'+lbl+'</div><div>'+bs+'</div><div>'+as+'</div><div>'+delta+'</div>';
+  }
+  var html='<div class="h">Metric</div><div class="h">Before</div><div class="h">After</div><div class="h">Change</div>';
+  html+=row('Arrivals on Green', beforeSnap.aog, after.aog, function(x){return (x*100).toFixed(0)+'%';}, true);
+  html+=row('Approach delay (s/veh)', beforeSnap.delay, after.delay, function(x){return x.toFixed(1);}, false);
+  html+=row('Split failures (% cyc)', beforeSnap.split, after.split, function(x){return (x*100).toFixed(0)+'%';}, false);
+  $('cmpGrid').innerHTML=html;
+}
+
+var lastAIHtml='', pendingBO=null;
+function renderAI(aogReal,platoon,sf,dReal){
+  if(aogReal==null) return;
+  var html=''; var bo=bestOffset(); pendingBO=bo;
+  if(aogReal>=0.7) html+='<div class="rec"><span class="sev sev-ok">Healthy</span>Good progression — <b>'+pct(aogReal)+'</b> arrive on green (platoon ratio '+platoon.toFixed(1)+').</div>';
+  else html+='<div class="rec"><span class="sev sev-warn">Coordination</span>Only <b>'+pct(aogReal)+'</b> arrive on green (platoon ratio '+platoon.toFixed(1)+'). Platoon from Signal 1 is landing on red — offset mistimed.</div>';
+  if(bo && bo.aog>aogReal+0.05){
+    html+='<div class="rec action"><span class="sev sev-warn">Recommendation</span>Set Signal-2 offset to <code>'+bo.offset+'s</code> (now <code>'+P.offset+'s</code>). Projected AoG: <b>'+pct(aogReal)+' → '+pct(bo.aog)+'</b>.<br><button class="btn-apply" id="applyOff">Apply &amp; measure</button></div>';
+  }
+  if(sf!=null && sf>0.2) html+='<div class="rec"><span class="sev sev-bad">Capacity</span>Split failures in <b>'+(sf*100).toFixed(0)+'%</b> of cycles — monitored approach undersaturated on green. Add ~'+Math.ceil(sf*15)+'s green or shorten cycle (watch side-street LOS).</div>';
+  else if(sf!=null && sf>0.05) html+='<div class="rec"><span class="sev sev-warn">Capacity</span>Occasional split failures (<b>'+(sf*100).toFixed(0)+'%</b>). Monitor at peak.</div>';
+  if(dReal!=null && dReal>35) html+='<div class="rec"><span class="sev sev-bad">Delay</span>Approach delay <b>'+dReal.toFixed(0)+' s/veh</b> (LOS E/F). Offset fix above should help.</div>';
+  // Only touch the DOM when the text actually changes — otherwise the Apply button gets
+  // destroyed/recreated every frame and clicks (mousedown+mouseup on same node) never register.
+  if(html===lastAIHtml) return;
+  lastAIHtml=html;
+  $('aiBody').innerHTML=html;
+}
+// Delegated, attached ONCE — survives panel re-renders.
+$('aiBody').addEventListener('click',function(e){
+  if(e.target && e.target.id==='applyOff' && pendingBO){
+    beforeSnap=monitored(); applyTime=t;                 // capture BEFORE
+    P.offset=pendingBO.offset; $('offset').value=pendingBO.offset; $('dOffset').textContent=pendingBO.offset;
+    records=[]; dEB_S2=[]; splitEvents=[]; maxQueue=0;  // clear window so AFTER is clean
+    e.target.textContent='✓ Applied — measuring…'; e.target.disabled=true;
+    lastAIHtml='__applied__';                            // force a fresh render next frame
+  }
+});
+
+// ===== loop =====
+function loop(ts){
+  if(!running) return;
+  if(lastTs==null) lastTs=ts;
+  var real=(ts-lastTs)/1000; lastTs=ts;
+  var acc=Math.min(0.3, real*timeScale);
+  while(acc>0){ var d=Math.min(0.1,acc); step(d); acc-=d; }
+  draw(); updateUI(); requestAnimationFrame(loop);
+}
+
+window.addEventListener('resize',draw);
+reset();
+</script>
+</body>
+</html>
